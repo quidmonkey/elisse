@@ -11,7 +11,10 @@
   "dependencies": {
     "browser-sync": "^2.2.3",
     "firebase": "^2.2.2",
-    "gulp": "^3.8.11",
     "react": "^0.12.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-inject": "^1.2.0"
   }
 }

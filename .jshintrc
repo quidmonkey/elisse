@@ -34,7 +34,6 @@
         "afterEach",
         "waits",
         "runs",
-        "inject",
         "jasmine",
         "spyOn",
         "Mocks"
