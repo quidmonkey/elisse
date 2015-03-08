@@ -1,0 +1,21 @@
+{
+  "name": "elisse",
+  "version": "0.0.0",
+  "authors": [
+    "Abe Walters <quidmonkey@gmail.com>"
+  ],
+  "description": "A Todo List Built with Reactjs and Firebase",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "http://ninjaspankypants.com/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
