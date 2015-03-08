@@ -9,6 +9,8 @@
   "author": "Abraham Walters",
   "license": "MIT",
   "dependencies": {
+    "browser-sync": "^2.2.3",
+    "firebase": "^2.2.2",
     "gulp": "^3.8.11",
     "react": "^0.12.2"
   }
