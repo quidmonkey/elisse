@@ -86,76 +86,13 @@
         </style>
 
         <!-- inject:css -->
+        <link rel="stylesheet" href="/app/styles/elisse.css">
         <!-- endinject -->
     </head>
 
     <body>
-        <header>
-            <span class="title">éllise</span>
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </header>
-
-        <div class="flip-container">
-            <div class="front">
-                <div class="container-fluid">
-                    <div class="jumbotron">
-                        <p>
-                            <div class="btn-group btn-group-justified">
-                                <div class="btn-group select-list">
-                                    <button type="submit" class="btn btn-lg btn-success">Target</button>
-                                </div>
-                                <div class="btn-group delete-list">
-                                    <button type="submit" class="btn btn-lg btn-danger">X</button>
-                                </div>
-                            </div>
-                        </p>
-
-                        <p>
-                            <div class="btn-group btn-group-justified">
-                                <div class="btn-group select-list">
-                                    <button type="submit" class="btn btn-lg btn-success">Trader Joes</button>
-                                </div>
-                                <div class="btn-group delete-list">
-                                    <button type="submit" class="btn btn-lg btn-danger">X</button>
-                                </div>
-                            </div>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="back">
-                <div class="container-fluid">
-                    <div class="jumbotron">
-                        <form>
-                            <div class="form-group">
-                                <label for="username">Email</label>
-                                <input id="email" type="email" class="form-control" placeholder="Enter Email">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input id="password" type="password" class="form-control" placeholder="Enter Password">
-                            </div>
-
-                            <button class="btn btn-lg btn-success btn-group-justified" type="submit">Login</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            function onUserClicked (event) {
-                $('.flip-container').toggleClass('flip');
-                return false;
-            }
-
-            $('.glyphicon-user').on('click', onUserClicked);
-        </script>
-
-        <!-- inject:js -->
+        
+        <!-- inject:jsx -->
         <!-- endinject -->
     </body>
 </html>

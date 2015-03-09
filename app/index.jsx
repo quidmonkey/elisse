@@ -2,11 +2,41 @@
 
 var React = require('react');
 
+var localStorage = {
+    status: {
+        loggedIn: false,
+        inMainMenu: false,
+    },
+    lists: [
+        {
+            name: 'Target',
+            items: []
+        },
+        {
+            name: 'Trader Joes',
+            items: []
+        }
+    ]
+};
+
 var App = React.createClass({
+    getInitialState: function () {
+        return localStorage;
+    },
+
+    componentDidMount: function () {
+        window.App = this;
+    },
+
     render: function () {
         return (
-            <Header></Header>
-            <Card></Card>
+            <div id="app">
+                <Header status={this.state.status}></Header>
+                <div class="flip-container">
+                    <FrontCard lists={this.state.lists}></FrontCard>
+                    <BackCard lists={this.state.lists}></BackCard>
+                </div>
+            </div>
         );
     }
 });
@@ -15,15 +45,24 @@ var Header = React.createClass({
     render: function () {
         var markup;
 
-        if (this.state.mainMenu) {
-            if (this.state.loggedIn) {
-                markup = <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>;
+        if (this.props.status.inMainMenu) {
+            if (this.props.status.loggedIn) {
+                markup =
+                    <div class="glyphs">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>;
+                    </div>;
             } else {
-                markup = <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>;
+                markup = 
+                    <div class="glyphs">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </div>;
             }
         } else {
-            markup = <span class="glyphicon glyphicon-list" aria-hidden="true"></span>;
+            markup = 
+                <div class="glyphs">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                </div>;
         }
 
         return (
@@ -35,23 +74,24 @@ var Header = React.createClass({
     }
 });
 
-var Card = React.createClass({
+var FrontCard = React.createClass({
     render: function () {
         return (
-            <div class="flip-container">
-                <div class="front">
-                    <div class="container-fluid">
-                        <div class="jumbotron">
-                            <FrontFace></FrontFace>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="back">
-                    <div class="container-fluid">
-                        <div class="jumbotron">
-                            <BackFace></BackFace>
-                        </div>
+            <div class="front">
+                <div class="container-fluid">
+                    <div class="jumbotron">
+                        {this.props.lists.map(function (list) {
+                            return (
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group select-list">
+                                        <button type="submit" class="btn btn-lg btn-success">{list.name}</button>
+                                    </div>
+                                    <div class="btn-group delete-list">
+                                        <button type="submit" class="btn btn-lg btn-danger">X</button>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -59,18 +99,28 @@ var Card = React.createClass({
     }
 });
 
-var FrontFace = React.createClass({
+var BackCard = React.createClass({
     render: function () {
         return (
-            
-        );
-    }
-});
+            <div class="back">
+                <div class="container-fluid">
+                    <div class="jumbotron">
+                        <form>
+                            <div class="form-group">
+                                <label for="username">Email</label>
+                                <input id="email" type="email" class="form-control" placeholder="Enter Email" />
+                            </div>
 
-var BackFace = React.createClass({
-    render: function () {
-        return (
-            
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input id="password" type="password" class="form-control" placeholder="Enter Password" />
+                            </div>
+
+                            <button class="btn btn-lg btn-success btn-group-justified" type="submit">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         );
     }
 });
