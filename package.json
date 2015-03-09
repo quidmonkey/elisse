@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "gulp": "^3.8.11",
-    "gulp-inject": "^1.2.0"
+    "gulp-inject": "^1.2.0",
+    "gulp-react": "^3.0.0"
   }
 }
