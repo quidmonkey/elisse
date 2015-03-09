@@ -24,11 +24,11 @@ gulp.task('browserSync', function () {
 });
  
 gulp.task('inject', function () {
-    var bower = gulp.src(bowerFiles(), {read: false}, {name: 'bower'});
+    var bower = gulp.src(bowerFiles(), {read: false});
     var src = gulp.src([paths.css, paths.js], {read: false});
 
     return gulp.src(paths.html)
-        .pipe(inject(bower))
+        .pipe(inject(bower, {name: 'bower'}))
         .pipe(inject(src))
         .pipe(gulp.dest('.'));
 });
@@ -42,7 +42,7 @@ gulp.task('react', function () {
 gulp.task('stylus', function () {
     return gulp.src(paths.styl)
         .pipe(stylus())
-        .pipe(gulp.dest('app/styles/stylus'));
+        .pipe(gulp.dest('app/styles/css'));
 });
 
 gulp.task('watch', function () {
