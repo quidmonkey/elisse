@@ -1,5 +1,6 @@
 'use strict';
 
+var bowerFiles = require('main-bower-files');
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
 var inject = require('gulp-inject');
@@ -23,10 +24,12 @@ gulp.task('browserSync', function () {
 });
  
 gulp.task('inject', function () {
-    var sources = gulp.src([paths.css, paths.js], {read: false});
- 
+    var bower = gulp.src(bowerFiles(), {read: false}, {name: 'bower'});
+    var src = gulp.src([paths.css, paths.js], {read: false});
+
     return gulp.src(paths.html)
-        .pipe(inject(sources))
+        .pipe(inject(bower))
+        .pipe(inject(src))
         .pipe(gulp.dest('.'));
 });
 
