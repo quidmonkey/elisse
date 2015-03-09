@@ -1,0 +1,37 @@
+white = #fff
+black = #000
+lightgray = #eee
+
+base = 10px
+base-sm = base / 2
+base-md = base * 1.5
+
+header 
+    width: 100%;
+    margin-bottom: base-md;
+    font: 32px/2 cursive;
+    color: white;
+    background-color: black;
+
+.title 
+    margin-left: base-md;
+
+.glyphs 
+    display: inline-block;
+    float: right;
+    margin-top: base-sm;
+    margin-right: base-md;
+
+header .glyphicon:hover 
+    color: lightgray;
+
+/* disable table styling */
+.btn-group 
+    display: block;
+
+/* force select button to span full-width */
+.btn-group .select-list
+    width: 100%;
+
+.front, .back 
+    width: 100%;

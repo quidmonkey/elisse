@@ -4,12 +4,14 @@ var browserSync = require('browser-sync');
 var gulp = require('gulp');
 var inject = require('gulp-inject');
 var react = require('gulp-react');
+var stylus = require('gulp-stylus');
 
 var paths = {
-    css: 'app/**/*.css',
+    css: 'app/styles/css/**/*.css',
     html: 'index.html',
     js: 'app/**/*.js',
-    jsx: 'app/**/*.jsx'
+    jsx: 'app/**/*.jsx',
+    styl: 'app/styles/stylus/**/*.styl'
 };
 
 gulp.task('browserSync', function () {
@@ -34,10 +36,17 @@ gulp.task('react', function () {
         .pipe(gulp.dest('app/'));
 });
 
+gulp.task('stylus', function () {
+    return gulp.src(paths.styl)
+        .pipe(stylus())
+        .pipe(gulp.dest('app/styles/stylus'));
+});
+
 gulp.task('watch', function () {
-    gulp.watch([paths.jsx], ['react']);
+    gulp.watch(paths.jsx, ['react']);
+    gulp.watch(paths.styl, ['stylus']);
     gulp.watch([paths.css, paths.html, paths.js], ['inject', browserSync.reload]);
 });
 
-gulp.task('dev', ['react', 'inject', 'browserSync']);
+gulp.task('dev', ['react', 'stylus', 'inject', 'browserSync']);
 gulp.task('default', ['dev', 'watch']);
