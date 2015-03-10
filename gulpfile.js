@@ -8,6 +8,7 @@ var react = require('gulp-react');
 var stylus = require('gulp-stylus');
 
 var paths = {
+    bower: 'bower_components/**/*.{css,js}',
     css: 'app/styles/css/**/*.css',
     html: 'index.html',
     js: 'app/**/*.js',
@@ -34,7 +35,7 @@ gulp.task('inject', function () {
 });
 
 gulp.task('react', function () {
-    return gulp.src('app/index.jsx')
+    return gulp.src(paths.jsx)
         .pipe(react())
         .pipe(gulp.dest('app/'));
 });
@@ -46,7 +47,7 @@ gulp.task('stylus', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.jsx, ['react']);
+    gulp.watch([paths.bower, paths.jsx], ['react']);
     gulp.watch(paths.styl, ['stylus']);
     gulp.watch([paths.css, paths.html, paths.js], ['inject', browserSync.reload]);
 });
