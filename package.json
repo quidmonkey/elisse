@@ -9,11 +9,9 @@
   "author": "Abraham Walters",
   "license": "MIT",
   "dependencies": {
-    "browser-sync": "^2.2.3",
-    "firebase": "^2.2.2",
-    "react": "^0.12.2"
   },
   "devDependencies": {
+    "browser-sync": "^2.2.3",
     "gulp": "^3.8.11",
     "gulp-inject": "^1.2.0",
     "gulp-react": "^3.0.0",
