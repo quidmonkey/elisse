@@ -1,8 +1,6 @@
 'use strict';
 
-var React = require('react');
-
-var localStorage = {
+var session = {
     status: {
         loggedIn: false,
         inMainMenu: false,
@@ -21,7 +19,7 @@ var localStorage = {
 
 var App = React.createClass({
     getInitialState: function () {
-        return localStorage;
+        return session;
     },
 
     componentDidMount: function () {
@@ -32,7 +30,7 @@ var App = React.createClass({
         return (
             <div id="app">
                 <Header status={this.state.status}></Header>
-                <div class="flip-container">
+                <div className="flip-container">
                     <FrontCard lists={this.state.lists}></FrontCard>
                     <BackCard lists={this.state.lists}></BackCard>
                 </div>
@@ -48,26 +46,26 @@ var Header = React.createClass({
         if (this.props.status.inMainMenu) {
             if (this.props.status.loggedIn) {
                 markup =
-                    <div class="glyphs">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>;
+                    <div className="glyphs">
+                        <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>;
                     </div>;
             } else {
                 markup = 
-                    <div class="glyphs">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <div className="glyphs">
+                        <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </div>;
             }
         } else {
             markup = 
-                <div class="glyphs">
-                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <div className="glyphs">
+                    <span className="glyphicon glyphicon-list" aria-hidden="true"></span>
                 </div>;
         }
 
         return (
             <header>
-                <span class="title">éllise</span>
+                <span className="title">éllise</span>
                 {markup}
             </header>
         );
@@ -77,17 +75,17 @@ var Header = React.createClass({
 var FrontCard = React.createClass({
     render: function () {
         return (
-            <div class="front">
-                <div class="container-fluid">
-                    <div class="jumbotron">
+            <div className="front">
+                <div className="container-fluid">
+                    <div className="jumbotron">
                         {this.props.lists.map(function (list) {
                             return (
-                                <div class="btn-group btn-group-justified">
-                                    <div class="btn-group select-list">
-                                        <button type="submit" class="btn btn-lg btn-success">{list.name}</button>
+                                <div className="btn-group btn-group-justified">
+                                    <div className="btn-group select-list">
+                                        <button type="submit" className="btn btn-lg btn-success">{list.name}</button>
                                     </div>
-                                    <div class="btn-group delete-list">
-                                        <button type="submit" class="btn btn-lg btn-danger">X</button>
+                                    <div className="btn-group delete-list">
+                                        <button type="submit" className="btn btn-lg btn-danger">X</button>
                                     </div>
                                 </div>
                             );
@@ -102,21 +100,21 @@ var FrontCard = React.createClass({
 var BackCard = React.createClass({
     render: function () {
         return (
-            <div class="back">
-                <div class="container-fluid">
-                    <div class="jumbotron">
+            <div className="back">
+                <div className="container-fluid">
+                    <div className="jumbotron">
                         <form>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label for="username">Email</label>
-                                <input id="email" type="email" class="form-control" placeholder="Enter Email" />
+                                <input id="email" type="email" className="form-control" placeholder="Enter Email" />
                             </div>
 
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label for="password">Password</label>
-                                <input id="password" type="password" class="form-control" placeholder="Enter Password" />
+                                <input id="password" type="password" className="form-control" placeholder="Enter Password" />
                             </div>
 
-                            <button class="btn btn-lg btn-success btn-group-justified" type="submit">Login</button>
+                            <button className="btn btn-lg btn-success btn-group-justified" type="submit">Login</button>
                         </form>
                     </div>
                 </div>
