@@ -62,7 +62,7 @@ gulp.task('stylus', function () {
 gulp.task('watch', function () {
     gulp.watch(paths.jsx, ['react', 'inject', browserSync.reload]);
     gulp.watch(paths.styl, ['stylus', 'inject', browserSync.reload]);
-    gulp.watch(paths.html, ['inject', browserSync.reload]);
+    gulp.watch([paths.bower, paths.html], ['inject', browserSync.reload]);
 });
 
 gulp.task('build', function (done) {
