@@ -16,7 +16,7 @@ var paths = {
     html: 'index.html',
     js: 'dist/**/*.js',
     jsx: 'src/**/*.jsx',
-    styl: 'src/styles/stylus/**/*.styl'
+    styl: 'src/**/*.styl'
 };
 
 gulp.task('browserSync', function () {
