@@ -22,14 +22,19 @@ var paths = {
 gulp.task('browserSync', function () {
     browserSync({
         server: {
-            baseDir: '.'
+            baseDir: paths.dist
         }
     });
 });
 
-gulp.task('clean', function (done) {
+gulp.task('copy', function (done) {
     del.sync(paths.dist);
-    done();
+
+    gulp.src(bowerFiles(), {base: '.'})
+        .pipe(gulp.dest(paths.dist));
+    
+    return gulp.src(paths.html)
+        .pipe(gulp.dest(paths.dist));
 });
  
 gulp.task('inject', function () {
@@ -38,8 +43,8 @@ gulp.task('inject', function () {
 
     return gulp.src(paths.html)
         .pipe(inject(bower, {name: 'bower'}))
-        .pipe(inject(src))
-        .pipe(gulp.dest('.'));
+        .pipe(inject(src, {ignorePath: paths.dist}))
+        .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('react', function () {
@@ -62,7 +67,7 @@ gulp.task('watch', function () {
 
 gulp.task('build', function (done) {
     runSequence(
-        'clean',
+        'copy',
         'react',
         'stylus',
         'inject',
