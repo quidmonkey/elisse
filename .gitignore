@@ -3,5 +3,4 @@ bower_components
 .tmp
 dist
 .DS_Store
-app/**/*.js
-app/styles/css/**/*.css
+index.html
