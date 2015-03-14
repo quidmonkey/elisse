@@ -100,6 +100,7 @@
         </header>
 
         <div class="flip-container">
+            <!--
             <div class="front">
                 <div class="container-fluid">
                     <div class="jumbotron">
@@ -127,19 +128,37 @@
                     </div>
                 </div>
             </div>
+            -->
+
+            <div class="front">
+                <div class="container-fluid">
+                    <div class="jumbotron">
+                        <h2>Create a List</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="list-name">List Name</label>
+                                <input id="list-name" type="text" class="form-control" name="list-name"placeholder="Enter List Name" />
+                            </div>
+
+                            <button class="btn btn-lg btn-success btn-group-justified" type="submit">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <div class="back">
                 <div class="container-fluid">
                     <div class="jumbotron">
+                        <h2>Login</h2>
                         <form>
                             <div class="form-group">
                                 <label for="username">Email</label>
-                                <input id="email" type="email" class="form-control" placeholder="Enter Email" />
+                                <input id="email" type="email" class="form-control" name="username" placeholder="Enter Email" />
                             </div>
 
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input id="password" type="password" class="form-control" placeholder="Enter Password" />
+                                <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password" />
                             </div>
 
                             <button class="btn btn-lg btn-success btn-group-justified" type="submit">Login</button>
