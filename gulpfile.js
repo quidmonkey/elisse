@@ -5,6 +5,7 @@ var browserSync = require('browser-sync');
 var del = require('del');
 var gulp = require('gulp');
 var inject = require('gulp-inject');
+var modRewrite = require('connect-modrewrite');
 var react = require('gulp-react');
 var runSequence = require('run-sequence');
 var stylus = require('gulp-stylus');
@@ -22,7 +23,12 @@ var paths = {
 gulp.task('browserSync', function () {
     browserSync({
         server: {
-            baseDir: paths.dist
+            baseDir: paths.dist,
+            middleware: [
+                modRewrite([
+                    '!\\.\\w+$ /index.html [L]'
+                ])
+            ]
         }
     });
 });

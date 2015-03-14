@@ -11,6 +11,7 @@
   "dependencies": {},
   "devDependencies": {
     "browser-sync": "^2.2.3",
+    "connect-modrewrite": "^0.7.11",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-inject": "^1.2.0",
