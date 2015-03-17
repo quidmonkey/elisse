@@ -38,23 +38,25 @@ var Header = React.createClass({
 
     render: function () {
         console.log('~~~ current route', this.getPathname());
-        var header = this;
+        var routeLogin = this.transitionTo.bind(this, 'login');
+        var routeHome = this.transitionTo.bind(this, '/');
+        var routeList = this.transitionTo.bind(this, 'list');
         var mainMenu = '';
         var user = '';
 
         if (!this.props.loggedIn && !this.isActive('/login')) {
-            user = <span className="glyphicon glyphicon-user" aria-hidden="true" onClick={header.transitionTo.call('login')} />;
+            user = <span className="glyphicon glyphicon-user" aria-hidden="true" onClick={routeLogin)} />;
         }
 
         if (!this.isActive('/')) {
-            mainMenu = <span className="glyphicon glyphicon-list" aria-hidden="true" onClick={header.transitionTo.call('/')} />;
+            mainMenu = <span className="glyphicon glyphicon-list" aria-hidden="true" onClick={routeHome} />;
         }
 
         return (
             <header>
                 <span className="title">éllise</span>
                 <div className="glyphs">
-                    <span className="glyphicon glyphicon-plus" aria-hidden="true" onClick={header.transitionTo.call('list')} />
+                    <span className="glyphicon glyphicon-plus" aria-hidden="true" onClick={routeList} />
                     { mainMenu }
                     { user }
                 </div>
@@ -83,7 +85,8 @@ var MainMenuCard = React.createClass({
     mixins: [ReactRouter.Navigation],
 
     render: function () {
-        var mainMenu = this;
+        var routeItems = this.transitionTo.bind(this, 'items', list);
+        var routeDelete = this.transitionTo.bind(this, 'delete', list);
 
         return (
             <div>
@@ -91,10 +94,10 @@ var MainMenuCard = React.createClass({
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
-                                <button type="submit" className="btn btn-lg btn-success" onClick={mainMenu.transitionTo.call('items', list)}>{list.name}</button>
+                                <button type="submit" className="btn btn-lg btn-success" onClick={routeItems}>{list.name}</button>
                             </div>
                             <div className="btn-group delete-list">
-                                <button type="submit" className="btn btn-lg btn-danger" onClick={mainMenu.transitionTo.call('delete', list)}>X</button>
+                                <button type="submit" className="btn btn-lg btn-danger" onClick={routeDelete}>X</button>
                             </div>
                         </div>
                     );
@@ -114,7 +117,7 @@ var LoginCard = React.createClass({
     },
 
     render: function () {
-        var login = this;
+        var login = this.login.bind(this);
 
         return (
             <div>
@@ -130,7 +133,7 @@ var LoginCard = React.createClass({
                         <input id="password" type="password" className="form-control" name="password" placeholder="Enter Password" />
                     </div>
 
-                    <button className="btn btn-lg btn-success btn-group-justified" type="submit" onClick={login.login.bind(login)}>Login</button>
+                    <button className="btn btn-lg btn-success btn-group-justified" type="submit" onClick={login}>Login</button>
                 </form>
             </div>
         );
@@ -140,14 +143,14 @@ var LoginCard = React.createClass({
 var CreateListCard = React.createClass({
     mixins: [ReactRouter.Navigation],
 
-    saveList: function () {
+    createList: function () {
         // create logic
         this.transitionTo('/');
         return false;
     },
 
     render: function () {
-        var createList = this;
+        var createList = this.createList.bind(this);
 
         return (
             <div>
@@ -158,7 +161,7 @@ var CreateListCard = React.createClass({
                         <input id="list-name" type="text" className="form-control" name="list-name" placeholder="Enter List Name" />
                     </div>
 
-                    <button className="btn btn-lg btn-success btn-group-justified" type="submit" onClick={createList.saveList.bind(createList)}>Create</button>
+                    <button className="btn btn-lg btn-success btn-group-justified" type="submit" onClick={createList}>Create</button>
                 </form>
             </div>
         );
@@ -173,7 +176,8 @@ var ItemsCard = React.createClass({
     },
 
     render: function () {
-        var list = this;
+        var deleteItem = this.deleteItem.bind(this, item);
+        var routeEditItem = this.transitionTo.bind(this, 'edit-item');
 
         return (
             <div>
@@ -181,10 +185,10 @@ var ItemsCard = React.createClass({
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
-                                <button type="submit" className="btn btn-lg btn-success" onClick={list.transitionTo.call('edit-item')}>{item.name}</button>
+                                <button type="submit" className="btn btn-lg btn-success" onClick={routeEditItem}>{item.name}</button>
                             </div>
                             <div className="btn-group delete-list">
-                                <button type="submit" className="btn btn-lg btn-danger" onClick={list.deleteItem.bind(list, item)}>X</button>
+                                <button type="submit" className="btn btn-lg btn-danger" onClick={deleteItem}>X</button>
                             </div>
                         </div>
                     );
@@ -204,13 +208,14 @@ var DeleteCard = React.createClass({
     },
 
     render: function () {
-        var del = this;
+        var deleteItem = this.deleteItem.bind(this);
+        var routeItems = this.transitionTo.bind(this, 'items');
 
         return (
             <div>
                 <h2>Are You Sure You Want to Delete This List?</h2>
-                <button className="btn btn-lg btn-success btn-group-justified" onClick={del.deleteItem.bind(del)}>Yes</button>
-                <button className="btn btn-lg btn-success btn-group-justified" onClick={del.transitionTo.call('items')}>No</button>
+                <button className="btn btn-lg btn-success btn-group-justified" onClick={deleteItem}>Yes</button>
+                <button className="btn btn-lg btn-success btn-group-justified" onClick={routeItems}>No</button>
             </div>
         );
     }
@@ -226,7 +231,7 @@ var EditItemCard = React.createClass({
     },
 
     render: function () {
-        var editItem = this;
+        var updateItem = this.updateItem.bind(this);
 
         return (
             <div>
@@ -237,7 +242,7 @@ var EditItemCard = React.createClass({
                         <input id="item-name" type="text" className="form-control" name="item-name" placeholder="{this.props.item.name}" />
                     </div>
 
-                    <button className="btn btn-lg btn-success btn-group-justified" type="submit" onClick={editItem.updateItem.bind(editItem)}>Update</button>
+                    <button className="btn btn-lg btn-success btn-group-justified" type="submit" onClick={updateItem}>Update</button>
                 </form>
             </div>
         );
