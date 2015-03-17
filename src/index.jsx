@@ -176,18 +176,20 @@ var ItemsCard = React.createClass({
         var list = this;
 
         return (
-            {this.props.list.items.map(function (item) {
-                return (
-                    <div className="btn-group btn-group-justified">
-                        <div className="btn-group select-list">
-                            <button type="submit" className="btn btn-lg btn-success" onClick={list.transitionTo.call('edit-item')}>{item.name}</button>
+            <div>
+                {this.props.list.items.map(function (item) {
+                    return (
+                        <div className="btn-group btn-group-justified">
+                            <div className="btn-group select-list">
+                                <button type="submit" className="btn btn-lg btn-success" onClick={list.transitionTo.call('edit-item')}>{item.name}</button>
+                            </div>
+                            <div className="btn-group delete-list">
+                                <button type="submit" className="btn btn-lg btn-danger" onClick={list.deleteItem.bind(list, item)}>X</button>
+                            </div>
                         </div>
-                        <div className="btn-group delete-list">
-                            <button type="submit" className="btn btn-lg btn-danger" onClick={list.deleteItem.bind(list, item)}>X</button>
-                        </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
+            </div>
         );
     }
 });
@@ -262,7 +264,7 @@ var routes = (
         <Route name="login" handler={LoginCard} />
         <Route name="list" handler={CreateListCard} />
         <Route name="items" handler={ItemsCard} />
-        <Route name="edit-item" handler{EditItemCard} />
+        <Route name="edit-item" handler={EditItemCard} />
         <Route name="delete" handler={DeleteCard} />
         <NotFoundRoute handler={NotFound} />
     </Route>
