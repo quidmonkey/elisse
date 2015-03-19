@@ -62,18 +62,18 @@ var Header = React.createClass({
         var user = '';
 
         if (!this.props.loggedIn && !this.isActive('/login')) {
-            user = <span className="glyphicon glyphicon-user" aria-hidden="true" onClick={routeLogin} />;
+            user = <a className="glyphicon glyphicon-user" aria-hidden="true" href="/login" />;
         }
 
         if (!this.isActive('/')) {
-            mainMenu = <span className="glyphicon glyphicon-list" aria-hidden="true" onClick={routeHome} />;
+            mainMenu = <a className="glyphicon glyphicon-list" aria-hidden="true" href="/" />;
         }
 
         return (
             <header>
-                <span className="title">éllise</span>
+                <a className="title" href="/">éllise</a>
                 <div className="glyphs">
-                    <span className="glyphicon glyphicon-plus" aria-hidden="true" onClick={routeList} />
+                    <a className="glyphicon glyphicon-plus" aria-hidden="true" href="/list" />
                     { mainMenu }
                     { user }
                 </div>
@@ -110,8 +110,10 @@ var MainMenuCard = React.createClass({
     componentWillMount: function () {
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/');
         this.firebaseRef.on('child_added', function (dataSnapshot) {
-            console.log('~~~ dataSnapshot', dataSnapshot);
-            this.state.lists.push(dataSnapshot.val());
+            this.state.lists.push({
+                id: dataSnapshot.key(),
+                name: dataSnapshot.val().name
+            });
             this.setState(this.state);
         }.bind(this));
     },
@@ -122,7 +124,7 @@ var MainMenuCard = React.createClass({
 
     goItems: function (list) {
         console.log('~~~ goItems', list);
-        this.transitionTo('list', {id: list.id});
+        this.transitionTo('list', {listId: list.id});
     },
 
     goDelete: function (list) {
@@ -135,7 +137,7 @@ var MainMenuCard = React.createClass({
 
         return (
             <div>
-                <button className="btn btn-lg btn-success btn-group-justified btn-create" onClick={routeCreate}>Create</button>
+                <button className="btn btn-lg btn-primary btn-group-justified" onClick={routeCreate}>Create List</button>
 
                 {this.state.lists.map(function (list) {
                     var routeItems = mainMenu.goItems.bind(mainMenu, list);
