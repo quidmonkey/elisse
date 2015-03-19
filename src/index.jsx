@@ -110,6 +110,7 @@ var MainMenuCard = React.createClass({
     componentWillMount: function () {
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/');
         this.firebaseRef.on('child_added', function (dataSnapshot) {
+            console.log('~~~ dataSnapshot', dataSnapshot);
             this.state.lists.push(dataSnapshot.val());
             this.setState(this.state);
         }.bind(this));
@@ -130,9 +131,12 @@ var MainMenuCard = React.createClass({
 
     render: function () {
         var mainMenu = this;
+        var routeCreate = this.transitionTo.bind(this, 'list/create');
 
         return (
             <div>
+                <button className="btn btn-lg btn-success btn-group-justified btn-create" onClick={routeCreate}>Create</button>
+
                 {this.state.lists.map(function (list) {
                     var routeItems = mainMenu.goItems.bind(mainMenu, list);
                     var routeDelete = mainMenu.goDelete.bind(mainMenu, list);
@@ -187,7 +191,7 @@ var LoginCard = React.createClass({
 });
 
 var CreateListCard = React.createClass({
-    mixins: [ReactRouter.Navigation, ReactRouter.State],
+    mixins: [ReactRouter.Navigation],
 
     getInitialState: function () {
         return {
@@ -196,16 +200,17 @@ var CreateListCard = React.createClass({
     },
 
     componentWillMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParmas().id);
+        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/');
+        this.value = '';
     },
 
     componentWillUnmount: function () {
         this.firebaseRef.off();
     },
 
-    createList: function () {
+    createList: function (event) {
         this.firebaseRef.push({
-            name: this.state.name,
+            name: event.target.querySelector('input').value,
             items: []
         });
         
@@ -220,8 +225,8 @@ var CreateListCard = React.createClass({
                 <h2>Create a List</h2>
                 <form onSubmit={createList}>
                     <div className="form-group">
-                        <label for="list-name">List Name</label>
-                        <input id="list-name" type="text" className="form-control" name="list-name" value={this.state.name} />
+                        <label>List Name</label>
+                        <input id="list-name" type="text" className="form-control" placeholder="List Name" />
                     </div>
 
                     <button className="btn btn-lg btn-success btn-group-justified" type="submit">Create</button>
