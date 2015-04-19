@@ -74,8 +74,8 @@ gulp.task('watch', function () {
 gulp.task('build', function (done) {
     runSequence(
         'copy',
-        'react',
         'stylus',
+        'react',
         'inject',
         done
     );
