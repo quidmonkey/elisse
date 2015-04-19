@@ -35,6 +35,13 @@ var TargetItems = [
     }
 ];
 
+var DefaultRoute = ReactRouter.DefaultRoute;
+var Link = ReactRouter.Link;
+var NotFoundRoute = ReactRouter.NotFoundRoute;
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var Route = ReactRouter.Route;
+var RouteHandler = ReactRouter.RouteHandler;
+
 var App = React.createClass({
     componentDidMount: function () {
         window.App = this;
@@ -49,13 +56,6 @@ var App = React.createClass({
         );
     }
 });
-
-var DefaultRoute = ReactRouter.DefaultRoute;
-var Link = ReactRouter.Link;
-var NotFoundRoute = ReactRouter.NotFoundRoute;
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var Route = ReactRouter.Route;
-var RouteHandler = ReactRouter.RouteHandler;
 
 var Header = React.createClass({
     mixins: [ReactRouter.State],
@@ -99,7 +99,7 @@ var Card = React.createClass({
                 <div className="container-fluid">
                     <div className="jumbotron">
                         <ReactCSSTransitionGroup component="div" transitionName="fade" transitionLeave={false}>
-                            <RouteHandler key={name} session={this.props.session} />
+                            <RouteHandler key={name} />
                         </ReactCSSTransitionGroup>
                     </div>
                 </div>
@@ -274,11 +274,13 @@ var ListCard = React.createClass({
 
     render: function () {
         var list = this;
-        var routeItem = this.routeItem.bind(this);
+        var listid = this.getParams().id;
 
         return (
             <div>
-                <button className="btn btn-lg btn-primary btn-group-justified" onClick={routeItem}>Create Item</button>
+                <Link to="item/create" params={{id: listid}}>
+                    <button className="btn btn-lg btn-primary btn-group-justified">Create Item</button>
+                </Link>
 
                 {this.state.items.map(function (item) {
                     var deleteItem = list.deleteItem.bind(list, item);
@@ -286,7 +288,7 @@ var ListCard = React.createClass({
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
-                                <Link to="item" params={{id:item.id}}>
+                                <Link to="item" params={{listid: listid, itemid: item.id}}>
                                     <button type="submit" className="btn btn-lg btn-success">{item.name}</button>
                                 </Link>
                             </div>
@@ -301,33 +303,47 @@ var ListCard = React.createClass({
     }
 });
 
-var DeleteCard = React.createClass({
-    mixins: [ReactRouter.Navigation],
+var CreateItemCard = React.createClass({
+    mixins: [ReactRouter.Navigation, ReactRouter.State],
+
+    getInitialState: function () {
+        return {
+            name: ''
+        };
+    },
 
     componentWillMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParmas().id);
+        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
+        this.value = '';
     },
 
     componentWillUnmount: function () {
         this.firebaseRef.off();
     },
 
-    deleteList: function () {
-        this.firebaseRef.remove();
+    createItem: function (event) {
+        this.firebaseRef.push({
+            name: event.target.querySelector('input').value,
+            items: []
+        });
+        
         this.transitionTo('/');
-        return false;
     },
 
     render: function () {
-        var deleteList = this.deleteList.bind(this);
+        var createItem = this.createItem.bind(this);
 
         return (
             <div>
-                <h2>Are You Sure You Want to Delete This List?</h2>
-                <button className="btn btn-lg btn-success btn-group-justified" onClick={deleteList}>Yes</button>
-                <Link to="/">
-                    <button className="btn btn-lg btn-success btn-group-justified">No</button>
-                </Link>
+                <h2>Create an Item</h2>
+                <form onSubmit={createItem}>
+                    <div className="form-group">
+                        <label>Item Name</label>
+                        <input id="item-name" type="text" className="form-control" placeholder="Item Name" />
+                    </div>
+
+                    <button className="btn btn-lg btn-success btn-group-justified" type="submit">Create</button>
+                </form>
             </div>
         );
     }
@@ -361,6 +377,38 @@ var ItemCard = React.createClass({
     }
 });
 
+var DeleteCard = React.createClass({
+    mixins: [ReactRouter.Navigation, ReactRouter.State],
+
+    componentWillMount: function () {
+        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+    },
+
+    componentWillUnmount: function () {
+        this.firebaseRef.off();
+    },
+
+    deleteList: function () {
+        this.firebaseRef.remove();
+        this.transitionTo('/');
+        return false;
+    },
+
+    render: function () {
+        var deleteList = this.deleteList.bind(this);
+
+        return (
+            <div>
+                <h2>Are You Sure You Want to Delete This List?</h2>
+                <button className="btn btn-lg btn-danger btn-group-justified" onClick={deleteList}>Yes</button>
+                <Link to="/">
+                    <button className="btn btn-lg btn-success btn-group-justified">No</button>
+                </Link>
+            </div>
+        );
+    }
+});
+
 var NotFound = React.createClass({
     render: function () {
         return (
@@ -376,9 +424,10 @@ var routes = (
         <DefaultRoute handler={MainMenuCard} />
         <Route name="login" handler={LoginCard} />
         <Route name="list/create" handler={CreateListCard} />
-        <Route name="list" path=":id" handler={ListCard} />
-        <Route name="item" path=":id" handler={ItemCard} />
-        <Route name="list/delete" path=":id" handler={DeleteCard} />
+        <Route name="list" path="list/:id" handler={ListCard} />
+        <Route name="list/delete" path="list/:id/delete" handler={DeleteCard} />
+        <Route name="item/create" path="list/:id/item/create" handler={CreateItemCard} />
+        <Route name="item" path="list/:listid/item/:itemid" handler={ItemCard} />
         <NotFoundRoute handler={NotFound} />
     </Route>
 );
