@@ -50,6 +50,7 @@ var App = React.createClass({
     }
 });
 
+var Link = ReactRouter.Link;
 var Header = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
 
@@ -62,18 +63,18 @@ var Header = React.createClass({
         var user = '';
 
         if (!this.props.loggedIn && !this.isActive('/login')) {
-            user = <a className="glyphicon glyphicon-user" aria-hidden="true" href="/login" />;
+            user = <Link className="glyphicon glyphicon-user" aria-hidden="true" to="login" />;
         }
 
         if (!this.isActive('/')) {
-            mainMenu = <a className="glyphicon glyphicon-list" aria-hidden="true" href="/" />;
+            mainMenu = <Link className="glyphicon glyphicon-list" aria-hidden="true" to="/" />;
         }
 
         return (
             <header>
-                <a className="title" href="/">éllise</a>
+                <Link className="title" to="/">éllise</Link>
                 <div className="glyphs">
-                    <a className="glyphicon glyphicon-plus" aria-hidden="true" href="/list/create" />
+                    <Link className="glyphicon glyphicon-plus" aria-hidden="true" to="/list/create" />
                     { mainMenu }
                     { user }
                 </div>
