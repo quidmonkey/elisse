@@ -50,15 +50,18 @@ var App = React.createClass({
     }
 });
 
+var DefaultRoute = ReactRouter.DefaultRoute;
 var Link = ReactRouter.Link;
+var NotFoundRoute = ReactRouter.NotFoundRoute;
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var Route = ReactRouter.Route;
+var RouteHandler = ReactRouter.RouteHandler;
+
 var Header = React.createClass({
-    mixins: [ReactRouter.Navigation, ReactRouter.State],
+    mixins: [ReactRouter.State],
 
     render: function () {
         console.log('~~~ current route', this.getPathname());
-        var routeLogin = this.transitionTo.bind(this, 'login');
-        var routeHome = this.transitionTo.bind(this, '/');
-        var routeList = this.transitionTo.bind(this, 'list');
         var mainMenu = '';
         var user = '';
 
@@ -83,7 +86,6 @@ var Header = React.createClass({
     }
 });
 
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Card = React.createClass({
     mixins: [ReactRouter.State],
 
@@ -93,14 +95,12 @@ var Card = React.createClass({
         var name = this.getPathname();
 
         return (
-            <div className="flip-container">
-                <div className="card">
-                    <div className="container-fluid">
-                        <div className="jumbotron">
-                            <ReactCSSTransitionGroup component="div" transitionName="fade" transitionLeave={false}>
-                                <RouteHandler key={name} session={this.props.session} />
-                            </ReactCSSTransitionGroup>
-                        </div>
+            <div className="card">
+                <div className="container-fluid">
+                    <div className="jumbotron">
+                        <ReactCSSTransitionGroup component="div" transitionName="fade" transitionLeave={false}>
+                            <RouteHandler key={name} session={this.props.session} />
+                        </ReactCSSTransitionGroup>
                     </div>
                 </div>
             </div>
@@ -109,8 +109,6 @@ var Card = React.createClass({
 });
 
 var MainMenuCard = React.createClass({
-    mixins: [ReactRouter.Navigation],
-
     getInitialState: function () {
         return {
             lists: []
@@ -132,35 +130,25 @@ var MainMenuCard = React.createClass({
         this.firebaseRef.off();
     },
 
-    routeDelete: function (list) {
-        console.log('~~~ routeDelete');
-        this.transitionTo('list/delete', {id: list.id});
-    },
-
-    routeList: function (list) {
-        console.log('~~~ routeList', list);
-        this.transitionTo('list', {id: list.id});
-    },
-
     render: function () {
-        var mainMenu = this;
-        var routeCreate = this.transitionTo.bind(this, 'list/create');
-
         return (
             <div>
-                <button className="btn btn-lg btn-primary btn-group-justified" onClick={routeCreate}>Create List</button>
+                <Link to="list/create">
+                    <button className="btn btn-lg btn-primary btn-group-justified">Create List</button>
+                </Link>
 
                 {this.state.lists.map(function (list) {
-                    var routeDelete = mainMenu.routeDelete.bind(mainMenu, list);
-                    var routeList = mainMenu.routeList.bind(mainMenu, list);
-
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
-                                <button type="submit" className="btn btn-lg btn-success" onClick={routeList}>{list.name}</button>
+                                <Link to="list" params={{id: list.id}}>
+                                    <button type="submit" className="btn btn-lg btn-success">{list.name}</button>
+                                </Link>
                             </div>
                             <div className="btn-group delete-list">
-                                <button type="submit" className="btn btn-lg btn-danger" onClick={routeDelete}>X</button>
+                                <Link to="list/delete" params={{id: list.id}}>
+                                    <button type="submit" className="btn btn-lg btn-danger">X</button>
+                                </Link>
                             </div>
                         </div>
                     );
@@ -174,7 +162,7 @@ var LoginCard = React.createClass({
     mixins: [ReactRouter.Navigation],
 
     login: function () {
-        // login logic
+        // TODO login logic
         this.transitionTo('/');
         return false;
     },
@@ -284,16 +272,6 @@ var ListCard = React.createClass({
         return false;
     },
 
-    routeItem: function (item) {
-        console.log('~~~ routeItem', item);
-
-        var id = item ? item.id : '';
-
-        this.transitionTo('item', {id: id});
-
-        return false;
-    },
-
     render: function () {
         var list = this;
         var routeItem = this.routeItem.bind(this);
@@ -304,12 +282,13 @@ var ListCard = React.createClass({
 
                 {this.state.items.map(function (item) {
                     var deleteItem = list.deleteItem.bind(list, item);
-                    var routeItem = list.routeItem.bind(list, item);
 
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
-                                <button type="submit" className="btn btn-lg btn-success" onClick={routeItem}>{item.name}</button>
+                                <Link to="item" params={{id:item.id}}>
+                                    <button type="submit" className="btn btn-lg btn-success">{item.name}</button>
+                                </Link>
                             </div>
                             <div className="btn-group delete-list">
                                 <button type="submit" className="btn btn-lg btn-danger" onClick={deleteItem}>X</button>
@@ -341,13 +320,14 @@ var DeleteCard = React.createClass({
 
     render: function () {
         var deleteList = this.deleteList.bind(this);
-        var routeHome = this.transitionTo.bind(this, '/');
 
         return (
             <div>
                 <h2>Are You Sure You Want to Delete This List?</h2>
                 <button className="btn btn-lg btn-success btn-group-justified" onClick={deleteList}>Yes</button>
-                <button className="btn btn-lg btn-success btn-group-justified" onClick={routeHome}>No</button>
+                <Link to="/">
+                    <button className="btn btn-lg btn-success btn-group-justified">No</button>
+                </Link>
             </div>
         );
     }
@@ -357,7 +337,7 @@ var ItemCard = React.createClass({
     mixins: [ReactRouter.Navigation],
 
     saveItem: function () {
-        // update logic
+        // TODO update logic
         this.transitionTo('items');
         return false;
     },
@@ -391,10 +371,6 @@ var NotFound = React.createClass({
     }
 });
 
-var Route = ReactRouter.Route;
-var DefaultRoute = ReactRouter.DefaultRoute;
-var RouteHandler = ReactRouter.RouteHandler;
-var NotFoundRoute = ReactRouter.NotFoundRoute;
 var routes = (
     <Route handler={App}>
         <DefaultRoute handler={MainMenuCard} />
