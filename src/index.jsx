@@ -248,10 +248,16 @@ var ListCard = React.createClass({
     },
 
     componentWillMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
-        this.firebaseRef.on('value', function (res) {
-            console.log('~~~ list card res', res);
-        }.bind(this));
+        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
+
+        this.firebaseRef.on('child_added', function (dataSnapshot) {
+            console.log('~~~ dataSnapshot', dataSnapshot.val());
+            this.state.items.push({
+                id: dataSnapshot.key(),
+                name: dataSnapshot.val().name
+            });
+            this.setState(this.state);
+        }.bind(this))
     },
 
     componentWillUnmount: function () {
@@ -265,7 +271,7 @@ var ListCard = React.createClass({
 
         this.state.items.splice(index, 1);
 
-        this.firebaseRef.update(this.state);
+        this.firebaseRef.set(this.state.items);
 
         this.setState(this.state);
 
@@ -283,6 +289,7 @@ var ListCard = React.createClass({
                 </Link>
 
                 {this.state.items.map(function (item) {
+                    console.log('~~~ item', item);
                     var deleteItem = list.deleteItem.bind(list, item);
 
                     return (
@@ -327,7 +334,9 @@ var CreateItemCard = React.createClass({
             items: []
         });
         
-        this.transitionTo('/');
+        this.transitionTo('/items', {id: this.getParams().id});
+
+        return false;
     },
 
     render: function () {
