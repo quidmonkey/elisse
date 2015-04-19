@@ -1,33 +1,33 @@
 /* flip speed goes here */
 .flip-container
-    transition: 0.6s;
-    transform-style: preserve-3d;
+    transition: 0.6s
+    transform-style: preserve-3d
 
-    position: relative;
+    position: relative
 
 // .flip
-//     transform: rotateY(360deg);
+//     transform: rotateY(360deg)
     
 .flip-enter
-    transform: rotateY(0deg);
+    transform: rotateY(0deg)
 
 .flip-enter.flip-enter-active
-    transform: rotateY(360deg);
+    transform: rotateY(360deg)
 
 /* hide back of pane during swap */
 .front, .back
-    backface-visibility: hidden;
+    backface-visibility: hidden
 
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: absolute
+    top: 0
+    left: 0
 
 /* front pane, placed above back */
 .front
-    z-index: 2;
+    z-index: 2
     /* for firefox 31 */
-    // transform: rotateY(0deg);
+    // transform: rotateY(0deg)
 
 /* back, initially hidden pane */
 .back
-    transform: rotateY(180deg);
+    transform: rotateY(180deg)
