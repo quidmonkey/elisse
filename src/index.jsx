@@ -83,16 +83,21 @@ var Header = React.createClass({
 });
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 var Card = React.createClass({
+    mixins: [ReactRouter.State],
+
     render: function () {
+        // react css transitions need a key to work
+        // tie key to route name
+        var name = this.getPathname();
+
         return (
             <div className="flip-container">
                 <div className="card">
                     <div className="container-fluid">
                         <div className="jumbotron">
-                            <ReactCSSTransitionGroup component="div" transitionName="fade">
-                                <RouteHandler session={this.props.session} />
+                            <ReactCSSTransitionGroup component="div" transitionName="fade" transitionLeave={false}>
+                                <RouteHandler key={name} session={this.props.session} />
                             </ReactCSSTransitionGroup>
                         </div>
                     </div>
