@@ -73,7 +73,7 @@ var Header = React.createClass({
             <header>
                 <a className="title" href="/">éllise</a>
                 <div className="glyphs">
-                    <a className="glyphicon glyphicon-plus" aria-hidden="true" href="/list" />
+                    <a className="glyphicon glyphicon-plus" aria-hidden="true" href="/list/create" />
                     { mainMenu }
                     { user }
                 </div>
@@ -91,7 +91,7 @@ var Card = React.createClass({
                 <div className="card">
                     <div className="container-fluid">
                         <div className="jumbotron">
-                            <ReactCSSTransitionGroup transitionName="flip">
+                            <ReactCSSTransitionGroup component="div" transitionName="fade">
                                 <RouteHandler session={this.props.session} />
                             </ReactCSSTransitionGroup>
                         </div>
