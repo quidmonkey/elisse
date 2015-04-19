@@ -240,10 +240,6 @@ var ListCard = React.createClass({
         event.preventDefault();
     },
 
-    shouldComponentUpdate: function (nextProps, nextState) {
-        return this.state.items.length !== nextState.items.length;
-    },
-
     render: function () {
         var list = this;
         var listid = this.getParams().id;
@@ -324,11 +320,32 @@ var CreateItemCard = React.createClass({
 });
 
 var ItemCard = React.createClass({
-    mixins: [ReactRouter.Navigation],
+    mixins: [ReactRouter.Navigation, ReactRouter.State],
+
+    getInitialState: function () {
+        return {
+            name: ''
+        }
+    },
+
+    componentWillMount: function () {
+        var url = 
+            'https://elisse.firebaseio.com/lists/' + this.getParams().listid +
+            '/items/' + this.getParams().itemid;
+
+        this.firebaseRef = new Firebase(url);
+
+        this.firebaseRef.on('child_added', function (dataSnapshot) {
+            this.setState({ name: dataSnapshot.val() });
+        }.bind(this));
+    },
 
     saveItem: function (event) {
-        // TODO update logic
-        this.transitionTo('/item');
+        this.firebaseRef.set({
+            name: event.target.querySelector('input').value
+        });
+
+        this.transitionTo('list', { id: this.getParams().listid });
         
         event.preventDefault();
     },
@@ -339,13 +356,13 @@ var ItemCard = React.createClass({
         return (
             <div>
                 <h2>Edit Item</h2>
-                <form>
+                <form onSubmit={saveItem}>
                     <div className="form-group">
                         <label for="item-name">Item Name</label>
-                        <input id="item-name" type="text" className="form-control" name="item-name" placeholder="{this.props.item.name}" />
+                        <input id="item-name" type="text" className="form-control" name="item-name" placeholder={this.state.name} />
                     </div>
 
-                    <button className="btn btn-lg btn-success btn-group-justified" type="submit" onClick={saveItem}>Update</button>
+                    <button className="btn btn-lg btn-success btn-group-justified" type="submit">Update</button>
                 </form>
             </div>
         );
@@ -365,6 +382,7 @@ var DeleteCard = React.createClass({
 
     deleteList: function (event) {
         this.firebaseRef.remove();
+
         this.transitionTo('/');
         
         event.preventDefault();
