@@ -82,6 +82,8 @@ var Header = React.createClass({
     }
 });
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var Card = React.createClass({
     render: function () {
         return (
@@ -89,7 +91,9 @@ var Card = React.createClass({
                 <div className="card">
                     <div className="container-fluid">
                         <div className="jumbotron">
-                            <RouteHandler session={this.props.session} />
+                            <ReactCSSTransitionGroup transitionName="flip">
+                                <RouteHandler session={this.props.session} />
+                            </ReactCSSTransitionGroup>
                         </div>
                     </div>
                 </div>

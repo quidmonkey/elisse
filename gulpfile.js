@@ -1,6 +1,6 @@
 'use strict';
 
-var bowerFiles = require('main-bower-files');
+var bowerFiles = require('./bower-files');
 var browserSync = require('browser-sync');
 var del = require('del');
 var gulp = require('gulp');
@@ -36,7 +36,7 @@ gulp.task('browserSync', function () {
 gulp.task('copy', function (done) {
     del.sync(paths.dist);
 
-    gulp.src(bowerFiles(), {base: '.'})
+    gulp.src(bowerFiles, {base: '.'})
         .pipe(gulp.dest(paths.dist));
     
     return gulp.src(paths.html)
@@ -44,7 +44,7 @@ gulp.task('copy', function (done) {
 });
  
 gulp.task('inject', function () {
-    var bower = gulp.src(bowerFiles(), {read: false});
+    var bower = gulp.src(bowerFiles, {read: false});
     var src = gulp.src([paths.css + '**/*.css', paths.js], {read: false});
 
     return gulp.src(paths.html)
@@ -54,7 +54,7 @@ gulp.task('inject', function () {
 });
 
 gulp.task('react', function () {
-    return gulp.src(paths.jsx)
+    return gulp.src([paths.jsx, 'node_modules/rc-css-transition-group/lib/CSSTransitionGroup.js'])
         .pipe(react())
         .pipe(gulp.dest(paths.dist));
 });

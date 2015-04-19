@@ -5,8 +5,14 @@
 
     position: relative;
 
-.flip
-    transform: rotateY(180deg);
+// .flip
+//     transform: rotateY(360deg);
+    
+.flip-enter
+    transform: rotateY(0deg);
+
+.flip-enter.flip-enter-active
+    transform: rotateY(360deg);
 
 /* hide back of pane during swap */
 .front, .back
@@ -20,7 +26,7 @@
 .front
     z-index: 2;
     /* for firefox 31 */
-    transform: rotateY(0deg);
+    // transform: rotateY(0deg);
 
 /* back, initially hidden pane */
 .back
