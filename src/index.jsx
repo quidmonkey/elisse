@@ -61,7 +61,6 @@ var Header = React.createClass({
     mixins: [ReactRouter.State],
 
     render: function () {
-        console.log('~~~ current route', this.getPathname());
         var mainMenu = '';
         var user = '';
 
@@ -251,7 +250,6 @@ var ListCard = React.createClass({
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
 
         this.firebaseRef.on('child_added', function (dataSnapshot) {
-            console.log('~~~ dataSnapshot', dataSnapshot.val());
             this.state.items.push({
                 id: dataSnapshot.key(),
                 name: dataSnapshot.val().name
@@ -265,8 +263,6 @@ var ListCard = React.createClass({
     },
 
     deleteItem: function (item) {
-        console.log('~~~ deleteItem', item);
-
         var index = this.state.items.indexOf(item);
 
         this.state.items.splice(index, 1);
@@ -289,7 +285,6 @@ var ListCard = React.createClass({
                 </Link>
 
                 {this.state.items.map(function (item) {
-                    console.log('~~~ item', item);
                     var deleteItem = list.deleteItem.bind(list, item);
 
                     return (
