@@ -167,7 +167,6 @@ var CreateListCard = React.createClass({
 
     componentWillMount: function () {
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/');
-        this.value = '';
     },
 
     componentWillUnmount: function () {
@@ -282,7 +281,6 @@ var CreateItemCard = React.createClass({
 
     componentWillMount: function () {
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
-        this.value = '';
     },
 
     componentWillUnmount: function () {
