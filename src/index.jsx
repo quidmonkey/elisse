@@ -1,40 +1,5 @@
 'use strict';
 
-var session = {
-    loggedIn: false,
-    lists: [
-        {
-            id: 1,
-            name: 'Target',
-            items: TargetItems
-        },
-        {
-            id: 2,
-            name: 'Trader Joes',
-            items: []
-        }
-    ]
-};
-
-var TargetItems = [
-    {
-        id: 1,
-        name: 'Laundry Detergent'
-    },
-    {
-        id: 2,
-        name: 'Bananas'
-    },
-    {
-        id: 3,
-        name: 'Trash Bags'
-    },
-    {
-        id: 4,
-        name: 'Milk'
-    }
-];
-
 var DefaultRoute = ReactRouter.DefaultRoute;
 var Link = ReactRouter.Link;
 var NotFoundRoute = ReactRouter.NotFoundRoute;
@@ -160,10 +125,11 @@ var MainMenuCard = React.createClass({
 var LoginCard = React.createClass({
     mixins: [ReactRouter.Navigation],
 
-    login: function () {
+    login: function (event) {
         // TODO login logic
         this.transitionTo('/');
-        return false;
+        
+        event.preventDefault();
     },
 
     render: function () {
@@ -255,14 +221,14 @@ var ListCard = React.createClass({
                 name: dataSnapshot.val().name
             });
             this.setState(this.state);
-        }.bind(this))
+        }.bind(this));
     },
 
     componentWillUnmount: function () {
         this.firebaseRef.off();
     },
 
-    deleteItem: function (item) {
+    deleteItem: function (item, event) {
         var index = this.state.items.indexOf(item);
 
         this.state.items.splice(index, 1);
@@ -271,7 +237,11 @@ var ListCard = React.createClass({
 
         this.setState(this.state);
 
-        return false;
+        event.preventDefault();
+    },
+
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return this.state.items.length !== nextState.items.length;
     },
 
     render: function () {
@@ -329,9 +299,9 @@ var CreateItemCard = React.createClass({
             items: []
         });
         
-        this.transitionTo('/items', {id: this.getParams().id});
+        this.transitionTo('list', {id: this.getParams().id});
 
-        return false;
+        event.preventDefault();
     },
 
     render: function () {
@@ -356,10 +326,11 @@ var CreateItemCard = React.createClass({
 var ItemCard = React.createClass({
     mixins: [ReactRouter.Navigation],
 
-    saveItem: function () {
+    saveItem: function (event) {
         // TODO update logic
-        this.transitionTo('items');
-        return false;
+        this.transitionTo('/item');
+        
+        event.preventDefault();
     },
 
     render: function () {
@@ -392,10 +363,11 @@ var DeleteCard = React.createClass({
         this.firebaseRef.off();
     },
 
-    deleteList: function () {
+    deleteList: function (event) {
         this.firebaseRef.remove();
         this.transitionTo('/');
-        return false;
+        
+        event.preventDefault();
     },
 
     render: function () {
