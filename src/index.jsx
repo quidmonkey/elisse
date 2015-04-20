@@ -207,8 +207,6 @@ var CreateListCard = React.createClass({
 var ListCard = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
 
-    items: [],
-
     getInitialState: function () {
         return {
             name: '',
@@ -220,15 +218,12 @@ var ListCard = React.createClass({
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
 
         this.firebaseRef.on('child_added', function (data) {
-            this.items.push({
+            this.state.items.push({
                 id: data.key(),
                 name: data.val().name
             });
 
-            this.setState({
-                name: this.state.name,
-                items: this.items
-            })
+            this.setState(this.state);
         }.bind(this));
     },
 
@@ -241,9 +236,9 @@ var ListCard = React.createClass({
 
         this.state.items.splice(index, 1);
 
-        this.firebaseRef.set(this.state.items);
-
         this.setState(this.state);
+
+        this.firebaseRef.set(this.state.items);
 
         event.preventDefault();
     },
