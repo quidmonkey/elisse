@@ -1,10 +1,14 @@
 {
   "name": "elisse",
   "version": "0.0.0",
-  "description": "A Todo List Built with Reactjs & Firebase",
+  "description": "A To-Do app using React, Firebase, Gulp, Bower and Bootstrap.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quidmonkey/elisse.git"
   },
   "author": "Abraham Walters",
   "license": "MIT",
