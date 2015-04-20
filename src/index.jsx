@@ -12,7 +12,7 @@ var App = React.createClass({
         return (
             <div id="app">
                 <Header />
-                <Card />
+                <Content />
             </div>
         );
     }
@@ -46,7 +46,7 @@ var Header = React.createClass({
     }
 });
 
-var Card = React.createClass({
+var Content = React.createClass({
     mixins: [ReactRouter.State],
 
     render: function () {
@@ -68,7 +68,7 @@ var Card = React.createClass({
     }
 });
 
-var MainMenuCard = React.createClass({
+var MainMenu = React.createClass({
     getInitialState: function () {
         return {
             lists: []
@@ -119,7 +119,7 @@ var MainMenuCard = React.createClass({
     }
 });
 
-var LoginCard = React.createClass({
+var Login = React.createClass({
     mixins: [ReactRouter.Navigation],
 
     login: function (event) {
@@ -153,7 +153,7 @@ var LoginCard = React.createClass({
     }
 });
 
-var CreateListCard = React.createClass({
+var CreateList = React.createClass({
     mixins: [ReactRouter.Navigation],
 
     getInitialState: function () {
@@ -200,7 +200,7 @@ var CreateListCard = React.createClass({
     }
 });
 
-var ListCard = React.createClass({
+var List = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
 
     getInitialState: function () {
@@ -270,7 +270,7 @@ var ListCard = React.createClass({
     }
 });
 
-var CreateItemCard = React.createClass({
+var CreateItem = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
 
     getInitialState: function () {
@@ -317,7 +317,7 @@ var CreateItemCard = React.createClass({
     }
 });
 
-var ItemCard = React.createClass({
+var Item = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
 
     getInitialState: function () {
@@ -371,7 +371,7 @@ var ItemCard = React.createClass({
     }
 });
 
-var DeleteCard = React.createClass({
+var DeleteList = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
 
     componentWillMount: function () {
@@ -417,13 +417,13 @@ var NotFound = React.createClass({
 
 var routes = (
     <Route handler={App}>
-        <DefaultRoute handler={MainMenuCard} />
-        <Route name="login" handler={LoginCard} />
-        <Route name="list/create" handler={CreateListCard} />
-        <Route name="list" path="list/:id" handler={ListCard} />
-        <Route name="list/delete" path="list/:id/delete" handler={DeleteCard} />
-        <Route name="item/create" path="list/:id/item/create" handler={CreateItemCard} />
-        <Route name="item" path="list/:listid/item/:itemid" handler={ItemCard} />
+        <DefaultRoute handler={MainMenu} />
+        <Route name="login" handler={Login} />
+        <Route name="list/create" handler={CreateList} />
+        <Route name="list" path="list/:id" handler={List} />
+        <Route name="list/delete" path="list/:id/delete" handler={DeleteList} />
+        <Route name="item/create" path="list/:id/item/create" handler={CreateItem} />
+        <Route name="item" path="list/:listid/item/:itemid" handler={Item} />
         <NotFoundRoute handler={NotFound} />
     </Route>
 );
