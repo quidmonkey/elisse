@@ -81,11 +81,12 @@ var MainMenuCard = React.createClass({
 
     componentWillMount: function () {
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/');
-        this.firebaseRef.on('child_added', function (dataSnapshot) {
+        this.firebaseRef.on('child_added', function (data) {
             this.state.lists.push({
-                id: dataSnapshot.key(),
-                name: dataSnapshot.val().name
+                id: data.key(),
+                name: data.val().name
             });
+
             this.setState(this.state);
         }.bind(this));
     },
@@ -180,6 +181,8 @@ var CreateListCard = React.createClass({
         });
         
         this.transitionTo('/');
+
+        event.preventDefault();
     },
 
     render: function () {
@@ -204,6 +207,8 @@ var CreateListCard = React.createClass({
 var ListCard = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
 
+    items: [],
+
     getInitialState: function () {
         return {
             name: '',
@@ -211,15 +216,19 @@ var ListCard = React.createClass({
         }
     },
 
-    componentWillMount: function () {
+    componentDidMount: function () {
         this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
 
-        this.firebaseRef.on('child_added', function (dataSnapshot) {
-            this.state.items.push({
-                id: dataSnapshot.key(),
-                name: dataSnapshot.val().name
+        this.firebaseRef.on('child_added', function (data) {
+            this.items.push({
+                id: data.key(),
+                name: data.val().name
             });
-            this.setState(this.state);
+
+            this.setState({
+                name: this.state.name,
+                items: this.items
+            })
         }.bind(this));
     },
 
@@ -333,8 +342,8 @@ var ItemCard = React.createClass({
 
         this.firebaseRef = new Firebase(url);
 
-        this.firebaseRef.on('child_added', function (dataSnapshot) {
-            this.setState({ name: dataSnapshot.val() });
+        this.firebaseRef.on('child_added', function (data) {
+            this.setState({ name: data.val() });
         }.bind(this));
     },
 
