@@ -8,10 +8,6 @@ var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
 
 var App = React.createClass({
-    componentDidMount: function () {
-        window.App = this;
-    },
-
     render: function () {
         return (
             <div id="app">
@@ -340,6 +336,10 @@ var ItemCard = React.createClass({
         this.firebaseRef.on('child_added', function (data) {
             this.setState({ name: data.val() });
         }.bind(this));
+    },
+
+    componentWillUnmount: function () {
+        this.firebaseRef.off();
     },
 
     saveItem: function (event) {
