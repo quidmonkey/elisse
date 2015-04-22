@@ -340,11 +340,15 @@ var CreateItem = React.createClass({
 });
 
 var Item = React.createClass({
-    mixins: [ReactRouter.Navigation, ReactRouter.State],
+    mixins: [
+        ReactFireMixin,
+        ReactRouter.Navigation,
+        ReactRouter.State
+    ],
 
     getInitialState: function () {
         return {
-            name: ''
+            item: {}
         }
     },
 
@@ -352,20 +356,12 @@ var Item = React.createClass({
         var url = 
             'https://elisse.firebaseio.com/lists/' + this.getParams().listid +
             '/items/' + this.getParams().itemid;
-
-        this.firebaseRef = new Firebase(url);
-
-        this.firebaseRef.on('child_added', function (data) {
-            this.setState({ name: data.val() });
-        }.bind(this));
-    },
-
-    componentWillUnmount: function () {
-        this.firebaseRef.off();
+        var ref = new Firebase(url);
+        this.bindAsObject(ref, 'item');
     },
 
     saveItem: function (event) {
-        this.firebaseRef.set({
+        this.firebaseRefs.item.set({
             name: event.target.querySelector('input').value
         });
 
@@ -383,7 +379,7 @@ var Item = React.createClass({
                 <form onSubmit={saveItem}>
                     <div className="form-group">
                         <label for="item-name">Item Name</label>
-                        <input id="item-name" type="text" className="form-control" name="item-name" placeholder={this.state.name} />
+                        <input id="item-name" type="text" className="form-control" name="item-name" placeholder={this.state.item.name} />
                     </div>
 
                     <button className="btn btn-lg btn-success btn-group-justified" type="submit">Update</button>
