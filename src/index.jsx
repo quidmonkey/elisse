@@ -390,18 +390,19 @@ var Item = React.createClass({
 });
 
 var DeleteList = React.createClass({
-    mixins: [ReactRouter.Navigation, ReactRouter.State],
+    mixins: [
+        ReactFireMixin,
+        ReactRouter.Navigation,
+        ReactRouter.State
+    ],
 
     componentWillMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
-    },
-
-    componentWillUnmount: function () {
-        this.firebaseRef.off();
+        var ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+        this.bindAsObject(ref, 'list');
     },
 
     deleteList: function (event) {
-        this.firebaseRef.remove();
+        this.firebaseRefs.list.remove();
 
         this.transitionTo('/');
         
@@ -413,7 +414,8 @@ var DeleteList = React.createClass({
 
         return (
             <div>
-                <h2>Are You Sure You Want to Delete This List?</h2>
+                <h2>{this.state.list.name}</h2>
+                <h4>Are You Sure You Want to Delete This List?</h4>
                 <button className="btn btn-lg btn-danger btn-group-justified" onClick={deleteList}>Yes</button>
                 <Link to="/">
                     <button className="btn btn-lg btn-success btn-group-justified">No</button>
