@@ -24,8 +24,13 @@ var Header = React.createClass({
     ],
 
     render: function () {
+        var createList = '';
         var mainMenu = '';
         var user = '';
+
+        if (!this.props.loggedIn && !this.isActive('/list/create')) {
+            createList = <Link className="glyphicon glyphicon-plus" aria-hidden="true" to="/list/create" />;
+        }
 
         if (!this.props.loggedIn && !this.isActive('/login')) {
             user = <Link className="glyphicon glyphicon-user" aria-hidden="true" to="login" />;
@@ -39,7 +44,7 @@ var Header = React.createClass({
             <header>
                 <Link className="title" to="/">éllise</Link>
                 <div className="glyphs">
-                    <Link className="glyphicon glyphicon-plus" aria-hidden="true" to="/list/create" />
+                    { createList }
                     { mainMenu }
                     { user }
                 </div>
