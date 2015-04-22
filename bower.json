@@ -21,7 +21,11 @@
   "dependencies": {
     "bootstrap": "~3.3.2",
     "react": "~0.12.2",
-    "firebase": "~2.2.2",
-    "react-router": "~0.12.4"
+    "firebase": "~2.2.4",
+    "react-router": "~0.12.4",
+    "reactfire": "~0.4.0"
+  },
+  "resolutions": {
+    "firebase": "~2.2.4"
   }
 }

@@ -7,6 +7,8 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
 
+Firebase.enableLogging();
+
 var App = React.createClass({
     render: function () {
         return (
@@ -201,40 +203,44 @@ var CreateList = React.createClass({
 });
 
 var List = React.createClass({
-    mixins: [ReactRouter.Navigation, ReactRouter.State],
+    mixins: [
+        ReactFireMixin,
+        ReactRouter.Navigation,
+        ReactRouter.State
+    ],
 
     getInitialState: function () {
         return {
-            name: '',
-            items: []
+            list: {},
         }
     },
 
-    componentDidMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
-
-        this.firebaseRef.on('child_added', function (data) {
-            this.state.items.push({
-                id: data.key(),
-                name: data.val().name
-            });
-
-            this.setState(this.state);
-        }.bind(this));
+    componentWillMount: function () {
+        var ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+        this.bindAsObject(ref, 'list');
     },
 
-    componentWillUnmount: function () {
-        this.firebaseRef.off();
+    convertToArray: function (firebaseObj) {
+        var items = [];
+        var key;
+
+        for (key in firebaseObj) {
+            items.push({
+                id: key,
+                name: firebaseObj[key]
+            });
+        }
+
+        return items;
     },
 
     deleteItem: function (item, event) {
-        var index = this.state.items.indexOf(item);
+        delete this.state.list.items[item.id];
 
-        this.state.items.splice(index, 1);
+        // inform firebase of the state update
+        this.firebaseRefs.list.set(this.state.list);
 
         this.setState(this.state);
-
-        this.firebaseRef.set(this.state.items);
 
         event.preventDefault();
     },
@@ -242,14 +248,17 @@ var List = React.createClass({
     render: function () {
         var list = this;
         var listid = this.getParams().id;
+        var items = this.convertToArray(this.state.list.items);
 
         return (
             <div>
+                <h2>{this.state.list.name}</h2>
+
                 <Link to="item/create" params={{id: listid}}>
                     <button className="btn btn-lg btn-primary btn-group-justified">Create Item</button>
                 </Link>
 
-                {this.state.items.map(function (item) {
+                {items.map(function (item) {
                     var deleteItem = list.deleteItem.bind(list, item);
 
                     return (
@@ -271,26 +280,26 @@ var List = React.createClass({
 });
 
 var CreateItem = React.createClass({
-    mixins: [ReactRouter.Navigation, ReactRouter.State],
+    mixins: [
+        ReactFireMixin,
+        ReactRouter.Navigation,
+        ReactRouter.State
+    ],
 
     getInitialState: function () {
         return {
-            name: ''
+            items: []
         };
     },
 
     componentWillMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
-    },
-
-    componentWillUnmount: function () {
-        this.firebaseRef.off();
+        var ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
+        this.bindAsArray(ref, 'items');
     },
 
     createItem: function (event) {
-        this.firebaseRef.push({
-            name: event.target.querySelector('input').value,
-            items: []
+        this.firebaseRefs.items.push({
+            name: event.target.querySelector('input').value
         });
         
         this.transitionTo('list', {id: this.getParams().id});
