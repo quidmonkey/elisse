@@ -7,8 +7,6 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
 
-Firebase.enableLogging();
-
 var App = React.createClass({
     render: function () {
         return (
@@ -71,6 +69,8 @@ var Content = React.createClass({
 });
 
 var MainMenu = React.createClass({
+    mixins: [ReactFireMixin],
+
     getInitialState: function () {
         return {
             lists: []
@@ -78,29 +78,34 @@ var MainMenu = React.createClass({
     },
 
     componentWillMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/');
-        this.firebaseRef.on('child_added', function (data) {
-            this.state.lists.push({
-                id: data.key(),
-                name: data.val().name
-            });
-
-            this.setState(this.state);
-        }.bind(this));
+        var ref = new Firebase('https://elisse.firebaseio.com/lists/');
+        this.bindAsObject(ref, 'lists');
     },
 
-    componentWillUnmount: function () {
-        this.firebaseRef.off();
+    convertToArray: function (firebaseObj) {
+        var items = [];
+        var key;
+
+        for (key in firebaseObj) {
+            items.push({
+                id: key,
+                name: firebaseObj[key].name
+            });
+        }
+
+        return items;
     },
 
     render: function () {
+        var lists = this.convertToArray(this.state.lists);
+
         return (
             <div>
                 <Link to="list/create">
                     <button className="btn btn-lg btn-primary btn-group-justified">Create List</button>
                 </Link>
 
-                {this.state.lists.map(function (list) {
+                {lists.map(function (list) {
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
