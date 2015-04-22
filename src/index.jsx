@@ -19,7 +19,9 @@ var App = React.createClass({
 });
 
 var Header = React.createClass({
-    mixins: [ReactRouter.State],
+    mixins: [
+        ReactRouter.State
+    ],
 
     render: function () {
         var mainMenu = '';
@@ -47,7 +49,9 @@ var Header = React.createClass({
 });
 
 var Content = React.createClass({
-    mixins: [ReactRouter.State],
+    mixins: [
+        ReactRouter.State
+    ],
 
     render: function () {
         // react css transitions need a key to work
@@ -69,7 +73,9 @@ var Content = React.createClass({
 });
 
 var MainMenu = React.createClass({
-    mixins: [ReactFireMixin],
+    mixins: [
+        ReactFireMixin
+    ],
 
     getInitialState: function () {
         return {
@@ -127,7 +133,9 @@ var MainMenu = React.createClass({
 });
 
 var Login = React.createClass({
-    mixins: [ReactRouter.Navigation],
+    mixins: [
+        ReactRouter.Navigation
+    ],
 
     login: function (event) {
         // TODO login logic
@@ -161,24 +169,24 @@ var Login = React.createClass({
 });
 
 var CreateList = React.createClass({
-    mixins: [ReactRouter.Navigation],
+    mixins: [
+        ReactFireMixin,
+        ReactRouter.Navigation
+    ],
 
     getInitialState: function () {
         return {
-            name: ''
+            lists: []
         };
     },
 
     componentWillMount: function () {
-        this.firebaseRef = new Firebase('https://elisse.firebaseio.com/lists/');
-    },
-
-    componentWillUnmount: function () {
-        this.firebaseRef.off();
+        var ref = new Firebase('https://elisse.firebaseio.com/lists/');
+        this.bindAsArray(ref, 'lists');
     },
 
     createList: function (event) {
-        this.firebaseRef.push({
+        this.firebaseRefs.lists.push({
             name: event.target.querySelector('input').value,
             items: []
         });
