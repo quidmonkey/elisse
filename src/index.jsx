@@ -8,7 +8,7 @@ var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
 
 var App = React.createClass({
-    render: function () {
+    render () {
         return (
             <div id="app">
                 <Header />
@@ -23,10 +23,10 @@ var Header = React.createClass({
         ReactRouter.State
     ],
 
-    render: function () {
-        var createList = '';
-        var mainMenu = '';
-        var user = '';
+    render () {
+        let createList = '';
+        let mainMenu = '';
+        let user = '';
 
         if (!this.props.loggedIn && !this.isActive('/list/create')) {
             createList = <Link className="glyphicon glyphicon-plus" aria-hidden="true" to="/list/create" />;
@@ -58,10 +58,10 @@ var Content = React.createClass({
         ReactRouter.State
     ],
 
-    render: function () {
+    render () {
         // react css transitions need a key to work
         // tie key to route name
-        var name = this.getPathname();
+        const name = this.getPathname();
 
         return (
             <div className="card">
@@ -82,20 +82,20 @@ var MainMenu = React.createClass({
         ReactFireMixin
     ],
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             lists: []
         };
     },
 
-    componentWillMount: function () {
-        var ref = new Firebase('https://elisse.firebaseio.com/lists/');
+    componentWillMount () {
+        const ref = new Firebase('https://elisse.firebaseio.com/lists/');
         this.bindAsObject(ref, 'lists');
     },
 
-    convertToArray: function (firebaseObj) {
-        var items = [];
-        var key;
+    convertToArray (firebaseObj) {
+        let items = [];
+        let key;
 
         for (key in firebaseObj) {
             items.push({
@@ -107,8 +107,8 @@ var MainMenu = React.createClass({
         return items;
     },
 
-    render: function () {
-        var lists = this.convertToArray(this.state.lists);
+    render () {
+        const lists = this.convertToArray(this.state.lists);
 
         return (
             <div>
@@ -116,7 +116,7 @@ var MainMenu = React.createClass({
                     <button className="btn btn-lg btn-primary btn-group-justified">Create List</button>
                 </Link>
 
-                {lists.map(function (list) {
+                {lists.map(list => {
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
@@ -142,15 +142,15 @@ var Login = React.createClass({
         ReactRouter.Navigation
     ],
 
-    login: function (event) {
+    login (event) {
         // TODO login logic
         this.transitionTo('/');
         
         event.preventDefault();
     },
 
-    render: function () {
-        var login = this.login.bind(this);
+    render () {
+        const login = this.login.bind(this);
 
         return (
             <div>
@@ -179,18 +179,18 @@ var CreateList = React.createClass({
         ReactRouter.Navigation
     ],
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             lists: []
         };
     },
 
-    componentWillMount: function () {
-        var ref = new Firebase('https://elisse.firebaseio.com/lists/');
+    componentWillMount () {
+        const ref = new Firebase('https://elisse.firebaseio.com/lists/');
         this.bindAsArray(ref, 'lists');
     },
 
-    createList: function (event) {
+    createList (event) {
         this.firebaseRefs.lists.push({
             name: event.target.querySelector('input').value,
             items: []
@@ -201,8 +201,8 @@ var CreateList = React.createClass({
         event.preventDefault();
     },
 
-    render: function () {
-        var createList = this.createList.bind(this);
+    render () {
+        const createList = this.createList.bind(this);
 
         return (
             <div>
@@ -227,20 +227,20 @@ var List = React.createClass({
         ReactRouter.State
     ],
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             list: {},
         }
     },
 
-    componentWillMount: function () {
-        var ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+    componentWillMount () {
+        const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
         this.bindAsObject(ref, 'list');
     },
 
-    convertToArray: function (firebaseObj) {
-        var items = [];
-        var key;
+    convertToArray (firebaseObj) {
+        let items = [];
+        let key;
 
         for (key in firebaseObj) {
             items.push({
@@ -252,7 +252,7 @@ var List = React.createClass({
         return items;
     },
 
-    deleteItem: function (item, event) {
+    deleteItem (item, event) {
         delete this.state.list.items[item.id];
 
         // inform firebase of the state update
@@ -263,10 +263,10 @@ var List = React.createClass({
         event.preventDefault();
     },
 
-    render: function () {
-        var list = this;
-        var listid = this.getParams().id;
-        var items = this.convertToArray(this.state.list.items);
+    render () {
+        const list = this;
+        const listid = this.getParams().id;
+        const items = this.convertToArray(this.state.list.items);
 
         return (
             <div>
@@ -276,8 +276,8 @@ var List = React.createClass({
                     <button className="btn btn-lg btn-primary btn-group-justified">Create Item</button>
                 </Link>
 
-                {items.map(function (item) {
-                    var deleteItem = list.deleteItem.bind(list, item);
+                {items.map(item => {
+                    let deleteItem = list.deleteItem.bind(list, item);
 
                     return (
                         <div className="btn-group btn-group-justified">
@@ -304,18 +304,18 @@ var CreateItem = React.createClass({
         ReactRouter.State
     ],
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             items: []
         };
     },
 
-    componentWillMount: function () {
-        var ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
+    componentWillMount () {
+        const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
         this.bindAsArray(ref, 'items');
     },
 
-    createItem: function (event) {
+    createItem (event) {
         this.firebaseRefs.items.push({
             name: event.target.querySelector('input').value
         });
@@ -325,8 +325,8 @@ var CreateItem = React.createClass({
         event.preventDefault();
     },
 
-    render: function () {
-        var createItem = this.createItem.bind(this);
+    render () {
+        const createItem = this.createItem.bind(this);
 
         return (
             <div>
@@ -351,21 +351,21 @@ var Item = React.createClass({
         ReactRouter.State
     ],
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             item: {}
         }
     },
 
-    componentWillMount: function () {
-        var url = 
+    componentWillMount () {
+        const url = 
             'https://elisse.firebaseio.com/lists/' + this.getParams().listid +
             '/items/' + this.getParams().itemid;
-        var ref = new Firebase(url);
+        const ref = new Firebase(url);
         this.bindAsObject(ref, 'item');
     },
 
-    saveItem: function (event) {
+    saveItem (event) {
         this.firebaseRefs.item.set({
             name: event.target.querySelector('input').value
         });
@@ -375,8 +375,8 @@ var Item = React.createClass({
         event.preventDefault();
     },
 
-    render: function () {
-        var saveItem = this.saveItem.bind(this);
+    render () {
+        const saveItem = this.saveItem.bind(this);
 
         return (
             <div>
@@ -401,12 +401,12 @@ var DeleteList = React.createClass({
         ReactRouter.State
     ],
 
-    componentWillMount: function () {
-        var ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+    componentWillMount () {
+        const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
         this.bindAsObject(ref, 'list');
     },
 
-    deleteList: function (event) {
+    deleteList (event) {
         this.firebaseRefs.list.remove();
 
         this.transitionTo('/');
@@ -414,8 +414,8 @@ var DeleteList = React.createClass({
         event.preventDefault();
     },
 
-    render: function () {
-        var deleteList = this.deleteList.bind(this);
+    render () {
+        const deleteList = this.deleteList.bind(this);
 
         return (
             <div>
@@ -431,7 +431,7 @@ var DeleteList = React.createClass({
 });
 
 var NotFound = React.createClass({
-    render: function () {
+    render () {
         return (
             <div>
                 <h2>Ruh Roh - 404</h2>

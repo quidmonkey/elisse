@@ -1,5 +1,6 @@
 'use strict';
 
+var babel = require('gulp-babel');
 var bowerFiles = require('./bower-files');
 var browserSync = require('browser-sync');
 var del = require('del');
@@ -55,6 +56,7 @@ gulp.task('inject', function () {
 
 gulp.task('react', function () {
     return gulp.src([paths.jsx, 'node_modules/rc-css-transition-group/lib/CSSTransitionGroup.js'])
+        .pipe(babel())
         .pipe(react())
         .pipe(gulp.dest(paths.dist));
 });
