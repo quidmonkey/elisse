@@ -3,7 +3,6 @@
 let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 let RouteHandler = ReactRouter.RouteHandler;
 
-
 export let Content = React.createClass({
     mixins: [
         ReactRouter.State

@@ -1,6 +1,6 @@
 'use strict';
 
-let CreateItem = React.createClass({
+export let CreateItem = React.createClass({
     mixins: [
         ReactFireMixin,
         ReactRouter.Navigation,
