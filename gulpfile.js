@@ -61,7 +61,16 @@ gulp.task('inject', function () {
     var src = gulp.src([paths.css + '**/*.css'], {read: false});
 
     return gulp.src(paths.html)
-        .pipe(inject(bower, {name: 'bower'}))
+        .pipe(inject(bower, {
+                name: 'bower',
+                transform: function (filepath) {
+                    if (/require1k/.test(filepath)) {
+                        return '<script src="' + filepath + '" data-main="./index"></script>';
+                    }
+
+                    return inject.transform.apply(inject.transform, arguments);
+                }
+        }))
         .pipe(inject(src, {ignorePath: paths.dist}))
         .pipe(gulp.dest(paths.dist));
 });
