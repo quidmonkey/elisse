@@ -1,7 +1,7 @@
 {
   "name": "elisse",
   "version": "0.0.0",
-  "description": "A To-Do app using React, Firebase, Gulp, Bower and Bootstrap.",
+  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap and Babel.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,10 +12,12 @@
   },
   "author": "Abraham Walters",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "merge-stream": "^0.1.7"
+  },
   "devDependencies": {
     "browser-sync": "^2.2.3",
-    "connect-modrewrite": "^0.7.11",
+    "connect-modrewrite": "^0.7.12",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0",

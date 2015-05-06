@@ -2,9 +2,9 @@
   "name": "elisse",
   "version": "0.0.0",
   "authors": [
-    "Abe Walters <quidmonkey@gmail.com>"
+    "Abraham Walters <quidmonkey@gmail.com>"
   ],
-  "description": "A Todo List Built with Reactjs and Firebase",
+  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap and Babel.",
   "moduleType": [
     "node"
   ],
@@ -23,7 +23,8 @@
     "react": "~0.12.2",
     "firebase": "~2.2.4",
     "react-router": "~0.12.4",
-    "reactfire": "~0.4.0"
+    "reactfire": "~0.4.0",
+    "require1k": "~1.0.0"
   },
   "resolutions": {
     "firebase": "~2.2.4"

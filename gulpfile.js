@@ -6,6 +6,7 @@ var browserSync = require('browser-sync');
 var del = require('del');
 var gulp = require('gulp');
 var inject = require('gulp-inject');
+var mergeStream = require('merge-stream');
 var modRewrite = require('connect-modrewrite');
 var react = require('gulp-react');
 var runSequence = require('run-sequence');
@@ -18,6 +19,9 @@ var paths = {
     html: 'index.html',
     js: 'dist/**/*.js',
     jsx: 'src/**/*.jsx',
+    plugins: [
+        'node_modules/rc-css-transition-group/lib/CSSTransitionGroup.js'
+    ],
     styl: 'src/**/*.styl'
 };
 
@@ -35,18 +39,26 @@ gulp.task('browserSync', function () {
 });
 
 gulp.task('copy', function (done) {
+    var mergedStreams = mergeStream();
+
     del.sync(paths.dist);
 
-    gulp.src(bowerFiles, {base: '.'})
-        .pipe(gulp.dest(paths.dist));
-    
-    return gulp.src(paths.html)
-        .pipe(gulp.dest(paths.dist));
+    mergedStreams.add(
+        gulp.src(bowerFiles, {base: '.'})
+            .pipe(gulp.dest(paths.dist))
+    );
+
+    mergedStreams.add(
+        gulp.src(paths.html)
+            .pipe(gulp.dest(paths.dist))
+    );
+
+    return mergedStreams;
 });
  
 gulp.task('inject', function () {
     var bower = gulp.src(bowerFiles, {read: false});
-    var src = gulp.src([paths.css + '**/*.css', paths.js], {read: false});
+    var src = gulp.src([paths.css + '**/*.css'], {read: false});
 
     return gulp.src(paths.html)
         .pipe(inject(bower, {name: 'bower'}))
@@ -55,8 +67,10 @@ gulp.task('inject', function () {
 });
 
 gulp.task('react', function () {
-    return gulp.src([paths.jsx, 'node_modules/rc-css-transition-group/lib/CSSTransitionGroup.js'])
-        .pipe(babel())
+    var src = paths.plugins.concat(paths.jsx);
+
+    return gulp.src(src)
+        .pipe(babel({ modules: 'common', blacklist: ['strict']}))
         .pipe(react())
         .pipe(gulp.dest(paths.dist));
 });
