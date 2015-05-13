@@ -4,7 +4,7 @@
   "authors": [
     "Abraham Walters <quidmonkey@gmail.com>"
   ],
-  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap and Babel.",
+  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap, Require and Babel.",
   "moduleType": [
     "node"
   ],

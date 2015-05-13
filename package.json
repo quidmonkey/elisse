@@ -1,7 +1,7 @@
 {
   "name": "elisse",
   "version": "0.0.0",
-  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap and Babel.",
+  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap, Require and Babel.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
