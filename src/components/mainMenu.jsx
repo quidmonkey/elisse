@@ -1,5 +1,7 @@
 'use strict';
 
+const Link = ReactRouter.Link;
+
 export let MainMenu = React.createClass({
     mixins: [
         ReactFireMixin

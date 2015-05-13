@@ -64,7 +64,7 @@ gulp.task('inject', function () {
         .pipe(inject(bower, {
                 name: 'bower',
                 transform: function (filepath) {
-                    if (/require1k/.test(filepath)) {
+                    if (/require/.test(filepath)) {
                         return '<script src="' + filepath + '" data-main="./index"></script>';
                     }
 
@@ -79,7 +79,7 @@ gulp.task('react', function () {
     var src = paths.plugins.concat(paths.jsx);
 
     return gulp.src(src)
-        .pipe(babel({ modules: 'common', blacklist: ['strict']}))
+        .pipe(babel({ modules: 'amd', blacklist: ['strict']}))
         .pipe(react())
         .pipe(gulp.dest(paths.dist));
 });

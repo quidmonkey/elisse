@@ -24,7 +24,7 @@
     "firebase": "~2.2.4",
     "react-router": "~0.12.4",
     "reactfire": "~0.4.0",
-    "require1k": "~1.0.0"
+    "requirejs": "~2.1.17"
   },
   "resolutions": {
     "firebase": "~2.2.4"
