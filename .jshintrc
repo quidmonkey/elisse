@@ -45,7 +45,7 @@
     "devel"         : true,   // Allow developments statements e.g. console.log
 
     // EcmaScript 6
-    "esnext"        : false,
+    "esnext"        : true,
 
     // EcmaScript 5
     "strict"        : false,  // Require 'use strict' pragma in every file.
