@@ -12,11 +12,11 @@ export let Header = React.createClass({
         let mainMenu = '';
         let user = '';
 
-        if (!this.props.loggedIn && !this.isActive('list/create')) {
+        if (!this.isActive('list/create')) {
             createList = <Link className="glyphicon glyphicon-plus" aria-hidden="true" to="/list/create" />;
         }
 
-        if (!this.props.loggedIn && !this.isActive('login')) {
+        if (!this.isActive('login')) {
             user = <Link className="glyphicon glyphicon-user" aria-hidden="true" to="login" />;
         }
 
