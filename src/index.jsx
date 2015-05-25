@@ -16,8 +16,6 @@ const DefaultRoute = ReactRouter.DefaultRoute;
 const NotFoundRoute = ReactRouter.NotFoundRoute;
 const Route = ReactRouter.Route;
 
-const APP_KEY = 'elisse';
-
 const App = React.createClass({
     mixins: [
         ForceFireLoginMixin

@@ -1,6 +1,7 @@
 'use strict';
 
-const APP_KEY = 'elisse';
+import {Config} from '../config';
+
 const ref = new Firebase('https://elisse.firebaseio.com');
 
 export const ForceFireLoginMixin = {
@@ -11,7 +12,7 @@ export const ForceFireLoginMixin = {
     ],
 
     componentDidMount() {
-        const credentials = localStorage.getItem(APP_KEY);
+        const credentials = localStorage.getItem(Config.appKey);
 
         if (credentials) {
             console.log('~~~ Credentials Found. Login not required.');

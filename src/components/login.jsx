@@ -1,6 +1,7 @@
 'use strict';
 
-const APP_KEY = 'elisse';
+import {Config} from '../config';
+
 const ref = new Firebase('https://elisse.firebaseio.com');
 
 export let Login = React.createClass({
@@ -28,7 +29,7 @@ export let Login = React.createClass({
                     login.createUser();
                 } else {
                     console.log('~~~ Login successful.');
-                    localStorage.setItem(APP_KEY, JSON.stringify(login.state));
+                    localStorage.setItem(Config.appKey, JSON.stringify(login.state));
                     login.transitionTo(queryParams.redirect || '/');
                 }
             }
@@ -71,7 +72,7 @@ export let Login = React.createClass({
                     }
                 } else {
                     console.log('~~~ User created successfully.', authData);
-                    localStorage.setItem(APP_KEY, JSON.stringify(login.state));
+                    localStorage.setItem(Config.appKey, JSON.stringify(login.state));
                     login.transitionTo(queryParams.redirect || '/');
                 }
             }

@@ -18,10 +18,10 @@ var paths = {
     dist: 'dist/',
     html: 'index.html',
     js: 'dist/**/*.js',
-    jsx: 'src/**/*.jsx',
     plugins: [
         'node_modules/rc-css-transition-group/lib/CSSTransitionGroup.js'
     ],
+    src: 'src/**/*.{js,jsx}',
     styl: 'src/**/*.styl'
 };
 
@@ -76,7 +76,7 @@ gulp.task('inject', function () {
 });
 
 gulp.task('react', function () {
-    var src = paths.plugins.concat(paths.jsx);
+    var src = paths.plugins.concat(paths.src);
 
     return gulp.src(src)
         .pipe(babel({ modules: 'amd', blacklist: ['strict']}))
@@ -91,7 +91,7 @@ gulp.task('stylus', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.jsx, ['react', 'inject', browserSync.reload]);
+    gulp.watch(paths.src, ['react', 'inject', browserSync.reload]);
     gulp.watch(paths.styl, ['stylus', 'inject', browserSync.reload]);
     gulp.watch([paths.bower, paths.html], ['inject', browserSync.reload]);
 });
