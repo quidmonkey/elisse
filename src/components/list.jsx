@@ -17,7 +17,6 @@ export let List = React.createClass({
 
     componentWillMount () {
         const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
-        console.log('~~~ user', ref.getAuth());
         this.bindAsObject(ref, 'list');
     },
 
