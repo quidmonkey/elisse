@@ -1,16 +1,16 @@
 'use strict';
 
+import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
+
 export let Item = React.createClass({
     mixins: [
-        ReactFireMixin,
-        ReactRouter.Navigation,
-        ReactRouter.State
+        ForceFireLoginMixin
     ],
 
     getInitialState () {
         return {
             item: {}
-        }
+        };
     },
 
     componentWillMount () {
@@ -41,7 +41,7 @@ export let Item = React.createClass({
                 <form onSubmit={saveItem}>
                     <div className="form-group">
                         <label for="item-name">Item Name</label>
-                        <input id="item-name" type="text" className="form-control" name="item-name" placeholder={this.state.item.name} />
+                        <input id="item-name" type="text" className="form-control" name="item-name" placeholder={this.state.item.name} required />
                     </div>
 
                     <button className="btn btn-lg btn-success btn-group-justified" type="submit">Update</button>

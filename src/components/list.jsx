@@ -1,22 +1,23 @@
 'use strict';
 
+import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
+
 const Link = ReactRouter.Link;
 
 export let List = React.createClass({
     mixins: [
-        ReactFireMixin,
-        ReactRouter.Navigation,
-        ReactRouter.State
+        ForceFireLoginMixin
     ],
 
     getInitialState () {
         return {
             list: {},
-        }
+        };
     },
 
     componentWillMount () {
         const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+        console.log('~~~ user', ref.getAuth());
         this.bindAsObject(ref, 'list');
     },
 

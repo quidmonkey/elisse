@@ -24,6 +24,7 @@
     "nonstandard"   : false,  // Non-Standard browser globals e.g. escape and unescape
 
     "predef"        : [       // Extra globals.
+        "Firebase",
         "React",
         "define",
         "require",

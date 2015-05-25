@@ -1,12 +1,12 @@
 'use strict';
 
+import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
+
 const Link = ReactRouter.Link;
 
 export let DeleteList = React.createClass({
     mixins: [
-        ReactFireMixin,
-        ReactRouter.Navigation,
-        ReactRouter.State
+        ForceFireLoginMixin
     ],
 
     componentWillMount () {

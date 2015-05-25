@@ -1,10 +1,10 @@
 'use strict';
 
+import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
+
 export let CreateItem = React.createClass({
     mixins: [
-        ReactFireMixin,
-        ReactRouter.Navigation,
-        ReactRouter.State
+        ForceFireLoginMixin
     ],
 
     getInitialState () {

@@ -1,9 +1,10 @@
 'use strict';
 
+import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
+
 export let CreateList = React.createClass({
     mixins: [
-        ReactFireMixin,
-        ReactRouter.Navigation
+        ForceFireLoginMixin
     ],
 
     getInitialState () {
@@ -37,7 +38,7 @@ export let CreateList = React.createClass({
                 <form onSubmit={createList}>
                     <div className="form-group">
                         <label>List Name</label>
-                        <input id="list-name" type="text" className="form-control" placeholder="List Name" />
+                        <input id="list-name" type="text" className="form-control" placeholder="List Name" required />
                     </div>
 
                     <button className="btn btn-lg btn-success btn-group-justified" type="submit">Create</button>

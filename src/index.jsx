@@ -10,13 +10,19 @@ import {DeleteList} from '../components/deleteList';
 import {CreateItem} from '../components/createItem';
 import {Item} from '../components/item';
 import {NotFound} from '../components/notFound';
-
+import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
 
 const DefaultRoute = ReactRouter.DefaultRoute;
 const NotFoundRoute = ReactRouter.NotFoundRoute;
 const Route = ReactRouter.Route;
 
+const APP_KEY = 'elisse';
+
 const App = React.createClass({
+    mixins: [
+        ForceFireLoginMixin
+    ],
+
     render () {
         return (
             <div id="app">

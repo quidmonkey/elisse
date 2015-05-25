@@ -1,10 +1,12 @@
 'use strict';
 
+import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
+
 const Link = ReactRouter.Link;
 
 export let MainMenu = React.createClass({
     mixins: [
-        ReactFireMixin
+        ForceFireLoginMixin
     ],
 
     getInitialState () {
