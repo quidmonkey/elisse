@@ -25,6 +25,8 @@
 
     "predef"        : [       // Extra globals.
         "Firebase",
+        "ReactRouter",
+        "ReactFireMixin",
         "React",
         "define",
         "require",
