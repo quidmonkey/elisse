@@ -1,13 +1,16 @@
 'use strict';
 
+var argv = require('yargs').argv;
 var babel = require('gulp-babel');
 var bowerFiles = require('./bower-files');
 var browserSync = require('browser-sync');
 var del = require('del');
 var gulp = require('gulp');
 var inject = require('gulp-inject');
+var karma = require('karma').server;
 var mergeStream = require('merge-stream');
 var modRewrite = require('connect-modrewrite');
+var path = require('path');
 var react = require('gulp-react');
 var runSequence = require('run-sequence');
 var stylus = require('gulp-stylus');
@@ -88,6 +91,14 @@ gulp.task('stylus', function () {
     return gulp.src(paths.styl)
         .pipe(stylus())
         .pipe(gulp.dest(paths.css));
+});
+
+gulp.task('test', function (done) {
+    karma.start({
+        browsers: argv.chrome ? ['Chrome'] : ['PhantomJS'],
+        configFile: path.join(__dirname, 'test/karma.conf.js'),
+        singleRun: !argv.keepalive,
+    }, done);
 });
 
 gulp.task('watch', function () {
