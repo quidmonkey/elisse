@@ -8,12 +8,10 @@ module.exports = gulp.task('inject-build', function () {
     process.chdir(config.dist);
 
     var css = gulp.src(config.css, {read: false});
-    var src = gulp.src(config.build.app, {read: false});
-    var vendor = gulp.src(config.build.vendor, {read: false});
+    var js = gulp.src(config.js, {read: false});
 
     return gulp.src(config.html)
-        .pipe(inject(css, {ignorePath: config.dist}))
-        .pipe(inject(src, {ignorePath: config.dist }))
-        .pipe(inject(vendor, {name: 'vendor', ignorePath: config.dist }))
+        .pipe(inject(css, { ignorePath: config.dist }))
+        .pipe(inject(js, { ignorePath: config.dist }))
         .pipe(gulp.dest('.'));
 });

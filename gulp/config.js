@@ -5,7 +5,10 @@ module.exports = {
     build: {
         app: 'elisse.min.js',
         css: 'styles/elisse.min.css',
-        vendor: 'vendor.min.js'
+        vendor: {
+            css: 'styles/vendor.min.css',
+            js: 'vendor.min.js'
+        }
     },
     css: 'styles/**/*.css',
     dev: 'dev/',
