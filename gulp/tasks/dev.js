@@ -1,5 +1,18 @@
 'use strict';
 
 var gulp = require('gulp');
+var runSequence = require('run-sequence');
 
-module.exports = gulp.task('dev', ['build', 'browserSync', 'watch']);
+module.exports = gulp.task('dev', function (done) {
+    global.env = 'dev';
+
+    runSequence(
+        'copy',
+        'stylus',
+        'react',
+        'inject',
+        'browserSync',
+        'watch',
+        done
+    );
+});

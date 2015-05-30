@@ -6,10 +6,11 @@ var gulp = require('gulp');
 var react = require('gulp-react');
 
 module.exports = gulp.task('react', function () {
+    var env = global.env === 'dev' ? config.dev : config.dist;
     var src = config.plugins.concat(config.src);
 
     return gulp.src(src)
         .pipe(babel({ modules: 'amd', blacklist: ['strict']}))
         .pipe(react())
-        .pipe(gulp.dest(config.dist));
+        .pipe(gulp.dest(env));
 });

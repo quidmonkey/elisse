@@ -7,6 +7,7 @@ var inject = require('gulp-inject');
 
 module.exports = gulp.task('inject', function () {
     var bower = gulp.src(bowerFiles, {read: false});
+    var env = global.env === 'dev' ? config.dev : config.dist;
     var src = gulp.src([config.css + '**/*.css'], {read: false});
 
     return gulp.src(config.html)
@@ -20,6 +21,6 @@ module.exports = gulp.task('inject', function () {
                     return inject.transform.apply(inject.transform, arguments);
                 }
         }))
-        .pipe(inject(src, {ignorePath: config.dist}))
-        .pipe(gulp.dest(config.dist));
+        .pipe(inject(src, {ignorePath: env}))
+        .pipe(gulp.dest(env));
 });
