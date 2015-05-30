@@ -8,7 +8,7 @@ var modRewrite = require('connect-modrewrite');
 module.exports = gulp.task('browserSync', function () {
     browserSync({
         server: {
-            baseDir: config.dist,
+            baseDir: config.dev,
             middleware: [
                 modRewrite([
                     '!\\.\\w+$ /index.html [L]'

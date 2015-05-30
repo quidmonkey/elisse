@@ -2,7 +2,12 @@
 
 module.exports = {
     bower: 'bower_components/**/*.{css,js}',
-    css: 'styles/css/',
+    build: {
+        app: 'elisse.min.js',
+        css: 'styles/elisse.min.css',
+        vendor: 'vendor.min.js'
+    },
+    css: 'styles/**/*.css',
     dev: 'dev/',
     dist: 'dist/',
     html: 'index.html',
