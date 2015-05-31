@@ -8,7 +8,7 @@ var stylus = require('gulp-stylus');
 
 module.exports = gulp.task('stylus-build', function () {
     return gulp.src(config.styl)
-        .pipe(stylint())
+        .pipe(stylint({ config: '.stylintrc' }))
         .pipe(stylus({ compress: true }))
         .pipe(rename(config.build.css))
         .pipe(gulp.dest(config.dist));
