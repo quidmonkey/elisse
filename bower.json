@@ -4,7 +4,7 @@
   "authors": [
     "Abraham Walters <quidmonkey@gmail.com>"
   ],
-  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap, Require, Babel, Karma, Webpack and Jasmine.",
+  "description": "A To-Do app using React, Firebase, Gulp, Bower, Bootstrap, Require, Babel, Karma, Webpack, Jasmine, ESLint and Stylint.",
   "moduleType": [
     "node"
   ],
