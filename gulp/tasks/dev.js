@@ -6,7 +6,7 @@ var runSequence = require('run-sequence');
 module.exports = gulp.task('dev', function (done) {
     runSequence(
         'copy',
-        'stylus',
+        'styles',
         'react',
         'inject',
         'browserSync',
