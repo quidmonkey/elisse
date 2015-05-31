@@ -7,7 +7,7 @@ module.exports = gulp.task('build', function (done) {
     runSequence(
         'copy-build',
         'styles-build',
-        'react-build',
+        'scripts-build',
         'inject-build',
         done
     );

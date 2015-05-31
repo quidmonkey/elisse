@@ -7,7 +7,7 @@ module.exports = gulp.task('dev', function (done) {
     runSequence(
         'copy',
         'styles',
-        'react',
+        'scripts',
         'inject',
         'browserSync',
         'watch',

@@ -3,17 +3,15 @@
 var babel = require('gulp-babel');
 var config = require('../config');
 var gulp = require('gulp');
+var notify = require('gulp-notify');
 var react = require('gulp-react');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
 
-module.exports = gulp.task('react-build', function () {
+module.exports = gulp.task('scripts', function () {
     var src = config.plugins.concat(config.src);
 
     return gulp.src(src)
+        .on('error', notify.onError())
         .pipe(babel({ modules: 'amd', blacklist: ['strict']}))
         .pipe(react())
-        .pipe(uglify())
-        .pipe(rename(config.build.app))
-        .pipe(gulp.dest(config.dist));
+        .pipe(gulp.dest(config.dev));
 });
