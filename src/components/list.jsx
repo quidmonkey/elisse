@@ -11,12 +11,13 @@ export let List = React.createClass({
 
     getInitialState () {
         return {
-            list: {},
+            list: {}
         };
     },
 
     componentWillMount () {
         const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+
         this.bindAsObject(ref, 'list');
     },
 
@@ -25,10 +26,12 @@ export let List = React.createClass({
         let key;
 
         for (key in firebaseObj) {
-            items.push({
-                id: key,
-                name: firebaseObj[key]
-            });
+            if (firebaseObj.hasOwnProperty(key)) {
+                items.push({
+                    id: key,
+                    name: firebaseObj[key]
+                });
+            }
         }
 
         return items;
@@ -46,25 +49,25 @@ export let List = React.createClass({
     },
 
     render () {
-        const list = this;
         const listid = this.getParams().id;
         const items = this.convertToArray(this.state.list.items);
+        const self = this;
 
         return (
             <div>
                 <h2>{this.state.list.name}</h2>
 
-                <Link to="item/create" params={{id: listid}}>
+                <Link to="item/create" params={{ id: listid }}>
                     <button className="btn btn-lg btn-primary btn-group-justified">Create Item</button>
                 </Link>
 
                 {items.map(item => {
-                    let deleteItem = list.deleteItem.bind(list, item);
+                    let deleteItem = self.deleteItem.bind(self, item);
 
                     return (
                         <div className="btn-group btn-group-justified">
                             <div className="btn-group select-list">
-                                <Link to="item" params={{listid: listid, itemid: item.id}}>
+                                <Link to="item" params={{ listid, itemid: item.id }}>
                                     <button type="submit" className="btn btn-lg btn-success">{item.name}</button>
                                 </Link>
                             </div>

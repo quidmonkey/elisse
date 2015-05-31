@@ -17,6 +17,7 @@ export let MainMenu = React.createClass({
 
     componentWillMount () {
         const ref = new Firebase('https://elisse.firebaseio.com/lists/');
+
         this.bindAsObject(ref, 'lists');
     },
 
@@ -25,10 +26,12 @@ export let MainMenu = React.createClass({
         let key;
 
         for (key in firebaseObj) {
-            items.push({
-                id: key,
-                name: firebaseObj[key].name
-            });
+            if (firebaseObj.hasOwnProperty(key)) {
+                items.push({
+                    id: key,
+                    name: firebaseObj[key].name
+                });
+            }
         }
 
         return items;

@@ -14,11 +14,11 @@ export let Item = React.createClass({
     },
 
     componentWillMount () {
-        const url = 
+        const url =
             'https://elisse.firebaseio.com/lists/' + this.getParams().listid +
             '/items/' + this.getParams().itemid;
         const ref = new Firebase(url);
-        
+
         this.bindAsObject(ref, 'item');
     },
 
@@ -28,7 +28,7 @@ export let Item = React.createClass({
         });
 
         this.transitionTo('list', { id: this.getParams().listid });
-        
+
         event.preventDefault();
     },
 

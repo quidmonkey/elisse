@@ -18,27 +18,27 @@ export let Login = React.createClass({
     },
 
     componentDidUpdate (prevProps, prevState) {
-        let login = this;
         let queryParams = this.getQuery();
+        let self = this;
 
         ref.authWithPassword(
             this.state,
             (err, authData) => {
                 if (err) {
                     console.warn('~~~ Login Error. Attempting to create user...', err);
-                    login.createUser();
+                    self.createUser();
                 } else {
                     console.log('~~~ Login successful.');
-                    localStorage.setItem(Config.appKey, JSON.stringify(login.state));
-                    login.transitionTo(queryParams.redirect || '/');
+                    localStorage.setItem(Config.appKey, JSON.stringify(self.state));
+                    self.transitionTo(queryParams.redirect || '/');
                 }
             }
         );
     },
 
     createUser () {
-        let login = this;
         let queryParams = this.getQuery();
+        let self = this;
 
         ref.createUser(
             this.state,
@@ -72,8 +72,8 @@ export let Login = React.createClass({
                     }
                 } else {
                     console.log('~~~ User created successfully.', authData);
-                    localStorage.setItem(Config.appKey, JSON.stringify(login.state));
-                    login.transitionTo(queryParams.redirect || '/');
+                    localStorage.setItem(Config.appKey, JSON.stringify(self.state));
+                    self.transitionTo(queryParams.redirect || '/');
                 }
             }
         );
@@ -84,7 +84,7 @@ export let Login = React.createClass({
             email: event.target.querySelector('input[name=email]').value,
             password: event.target.querySelector('input[name=password]').value
         });
-        
+
         event.preventDefault();
     },
 

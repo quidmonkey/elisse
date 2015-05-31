@@ -11,6 +11,7 @@ export let DeleteList = React.createClass({
 
     componentWillMount () {
         const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id);
+
         this.bindAsObject(ref, 'list');
     },
 
@@ -18,7 +19,7 @@ export let DeleteList = React.createClass({
         this.firebaseRefs.list.remove();
 
         this.transitionTo('/');
-        
+
         event.preventDefault();
     },
 

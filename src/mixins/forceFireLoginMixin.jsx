@@ -11,7 +11,7 @@ export const ForceFireLoginMixin = {
         ReactRouter.State
     ],
 
-    componentDidMount() {
+    componentDidMount () {
         const credentials = localStorage.getItem(Config.appKey);
 
         if (credentials) {
@@ -35,5 +35,5 @@ export const ForceFireLoginMixin = {
                 this.transitionTo('login', {}, { redirect: this.getPath() });
             }
         }
-    }  
+    }
 };

@@ -15,6 +15,7 @@ export let CreateItem = React.createClass({
 
     componentWillMount () {
         const ref = new Firebase('https://elisse.firebaseio.com/lists/' + this.getParams().id + '/items/');
+
         this.bindAsArray(ref, 'items');
     },
 
@@ -22,7 +23,7 @@ export let CreateItem = React.createClass({
         this.firebaseRefs.items.push({
             name: event.target.querySelector('input').value
         });
-        
+
         this.transitionTo('list', {id: this.getParams().id});
 
         event.preventDefault();
