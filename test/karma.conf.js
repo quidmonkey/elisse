@@ -1,8 +1,5 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-
 module.exports = function (config) {
   config.set({
     browsers: ['PhantomJS'],
@@ -43,7 +40,7 @@ module.exports = function (config) {
       }
     },
     webpackServer: {
-      noInfo: true // don't spam the console when running in karma!
+      noInfo: false // don't spam the console when running in karma!
     },
     colors: true,
   });
