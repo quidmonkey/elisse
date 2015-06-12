@@ -1,16 +1,16 @@
 'use strict';
 
-import {Header} from '../components/header';
-import {Content} from '../components/content';
-import {MainMenu} from '../components/mainMenu';
-import {Login} from '../components/login';
-import {CreateList} from '../components/createList';
-import {List} from '../components/list';
-import {DeleteList} from '../components/deleteList';
-import {CreateItem} from '../components/createItem';
-import {Item} from '../components/item';
-import {NotFound} from '../components/notFound';
-import {ForceFireLoginMixin} from '../mixins/forceFireLoginMixin';
+import {Header} from 'components/header';
+import {Content} from 'components/content';
+import {MainMenu} from 'components/mainMenu';
+import {Login} from 'components/login';
+import {CreateList} from 'components/createList';
+import {List} from 'components/list';
+import {DeleteList} from 'components/deleteList';
+import {CreateItem} from 'components/createItem';
+import {Item} from 'components/item';
+import {NotFound} from 'components/notFound';
+import {ForceFireLoginMixin} from 'mixins/forceFireLoginMixin';
 
 const DefaultRoute = ReactRouter.DefaultRoute;
 const NotFoundRoute = ReactRouter.NotFoundRoute;
