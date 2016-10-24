@@ -79,13 +79,13 @@
                 "return": "returns"
             }
         }],
-        "valid-typeof": ;2,                     // prevent typeof a === undefined vs. typeof a === 'undefined'
+        "valid-typeof": 2,                      // prevent typeof a === undefined vs. typeof a === 'undefined'
 
 
         // best practice section
-        // "accessor-pairs": 2,                    // enforce getter with setter                
+        // "accessor-pairs": 2,                 // enforce getter with setter
         "block-scoped-var": 2,                  // prevent variable use outside of block
-        "complexity": false,                    // prevent cyclomatic complexity threshold
+        "complexity": 0,                        // prevent cyclomatic complexity threshold
         "consistent-return": 2,                 // enforce an explicit return
         "curly": 2,                             // require curly brackets for all conditionals
         "default-case": 2,                      // require default-case for switch statements
@@ -161,7 +161,7 @@
         "no-new-require": 2,                    // prevent use of a new statement with a require statement
         "no-path-concat": 2,                    // prevent string concat with __dirname & __filename
         "no-process-exit": 2,                   // prevent process.exit()
-        "no-restricted-modules": 0,             // prevent use of specific node modules 
+        "no-restricted-modules": 0,             // prevent use of specific node modules
         "no-sync": 0,                           // prevent use of synchronous methods
 
 
@@ -179,9 +179,7 @@
         "eol-last": 2,                          // enforce newline at eof
         "func-names": 2,                        // enforce function names - no anonymous functions
         "func-style": [2, "declaration"],       // enforce function declarations vs. expressions
-        "indent": [2, 4, {                      // enforce tab width
-            "indentSwitchCase": true
-        }],
+        "indent": [2, 4],
         "key-spacing": [2, {                    // enforce object key spacing around colons
             "beforeColon": false,
             "afterColon": true
