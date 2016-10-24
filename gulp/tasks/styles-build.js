@@ -6,7 +6,7 @@ var rename = require('gulp-rename');
 var stylint = require('gulp-stylint');
 var stylus = require('gulp-stylus');
 
-module.exports = gulp.task('stylus-build', function () {
+module.exports = gulp.task('styles-build', function () {
     return gulp.src(config.styl)
         .pipe(stylint({ config: '.stylintrc' }))
         .pipe(stylus({ compress: true }))
